@@ -21,7 +21,7 @@ STModel-Data
 
 ## Get climatic data
 
-	R CMD BATCH get_ClimData.r &
+	R CMD BATCH get_climData.r &
 
 ##### Output
 
@@ -37,6 +37,9 @@ STModel-Data
 - plot_id, year, MeanTemp and AnnualPrecip not NULL
 
 ## Get plot info data
+
+
+	R CMD BATCH get_plotInfo.r &
 
 ##### Output
 
