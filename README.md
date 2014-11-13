@@ -1,6 +1,11 @@
 STModel-Data
 ============
 
+## Getting started
+
+	git clone git@github.com:TheoreticalEcosystemEcology/STModel-Data.git
+	cd STModel-Data
+
 ## Get tree data
 
 	R CMD BATCH get_treeData.r &
