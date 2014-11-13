@@ -44,7 +44,7 @@ query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 ## Send the query to the database
 
 pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
-## Time: Approx. 5 minutes
+## Time: Approx. 5-15 minutes
 
 # Reshaping and writing grid dataset
 ## ---------------------------------------------
@@ -57,8 +57,8 @@ pastClimate_grid <- dcast(pastClimate_grid,x+y ~ biovar, value.var="val")
 # - Get decimal for annual_mean_temp (divided by 10)
 # - Convert mm to m for annual_pp (divided by 1000)
 
-pastClimate_grid$annual_mean_temp <- pastClimate_grid[which(pastClimate_grid$annual_mean_temp!=-9999),pastClimate_grid$annual_mean_temp/10]
-pastClimate_grid$pp <- pastClimate_grid[which(pastClimate_grid$annual_pp!=-9999),pastClimate_grid$pp/1000]
+pastClimate_grid$annual_mean_temp <- pastClimate_grid[which("annual_mean_temp" != -9999),"annual_mean_temp"] /10
+pastClimate_grid$annual_pp <- pastClimate_grid[which("annual_pp" != -9999),"annual_pp"] /1000
 
 ## Add year columns and rename all dataset columns 
 names(pastClimate_grid)[3:4] <- c("env1","env2")
