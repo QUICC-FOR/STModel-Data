@@ -1,5 +1,5 @@
 # Prepare past climate grid input 
-# Date: Novenver 13th, 2014
+# Date: November 13th, 2014
 
 # This script prepare grid of the past climate for the province of Quebec.
 ## ---------------------------------------------
@@ -42,7 +42,6 @@ query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 		) AS points_query;"
 
 ## Send the query to the database
-
 res_pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
 ## Time: Approx. 5-15 minutes
 
@@ -80,3 +79,4 @@ pastClimate_grid <- pastClimate_grid[, c("x","y","year","env1","env2")]
 
 ## Write
 write.table(pastClimate_grid, file="out_files/pastClimate_grid.csv", sep=',', row.names=FALSE)
+
