@@ -1,11 +1,38 @@
-# Get all tree data from the QUICC-FOR Database
+# Get the trees out of the QUICC-FOR Database
 # Date: November 14th, 2014
 
-# This script extract all tree
+# This script extract all tree species needed by the stm model.
 ## ---------------------------------------------
-# First step: The North america past climate grid is clipped with the spatial polygon of Quebec.
-# Second step: The average of the climatic variables are compute on the clipped raster and the period of time expected
+# Details on species are accessible in the file: ./out_files/stm_code_species.csv
 
+# 18032-ABI-BAL: Balsam fir 
+# 18034-PIC-RUB: Red spruce 
+# 19408-QUE-RUB: Red oak 
+# 19462-FAG-GRA: American beech 
+# 19466-ALN-NA: Saule
+# 19481-BET-ALL: Yellow birch 
+# 19489-BET-PAP: White 
+# 19511-OST-VIR: Ironwood
+# 21536-TIL-AME: Basswood 
+# 22453-POP-BAL: Balsam poplar 
+# 22463-POP-GRA: Large tooth 
+# 24764-PRU-SER: Black cherry 
+# 24799-PRU-PEN: Pin cherry 
+# 25319-SOR-AME: American mountain-ash
+# 28728-ACE-RUB: Red maple
+# 28731-ACE-SAC: Sugar maple
+# 32931-FRA-AME: White ash
+# 32945-FRA-NIG: Black ash
+# 183295-PIC-GLA: White spruce
+# 183302-PIC-MAR: Black spruce
+# 183319-PIN-BAN: jack pine
+# 183412-LAR-LAR: Tamarack
+# 195773-POP-TRE: Trembling aspen 
+
+# Filters:
+	# - DBH > 127 and not null
+	# - plot_size is not null
+	# - plot_id should be in the materialized view (for further details see ./src_sql/stm_plot_ids.sql)
 
 ## Get treeData from quicc-for database
 ## ---------------------------------------------
@@ -14,7 +41,7 @@
 source('./con_quicc_db.r')
 
 # Query 
-query_pastClimate_grid  <- "
+query_treeData  <- "
 SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area FROM(
 	SELECT plot_id, year_measured, id_spe, sum(surf_mm2)/1000000 as surf_spe_m2, plot_size FROM (
 			SELECT tree.plot_id, tree.year_measured,tree.tree_id,tree.id_spe,
@@ -54,8 +81,8 @@ SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area
 "
 
 ## Send the query to the database
-treeData <- dbGetQuery(con, query_pastClimate_grid)
-## Time: Approx. 5-15 minutes
+treeData <- dbGetQuery(con, query_treeData)
+## Time: Approx. 3 minutes
 
 # Writing final tree dataset
 ## ---------------------------------------------
