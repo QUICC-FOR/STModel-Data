@@ -5,9 +5,9 @@
 
 -- Drop and rebuilt: rdb_quicc.stm_data
 
-DROP MATERIALIZED VIEW rdb_quicc.stm_data;
+DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids;
 
-CREATE MATERIALIZED VIEW rdb_quicc.stm_data AS (
+CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
 SELECT DISTINCT 
 	plot.plot_id
 FROM
