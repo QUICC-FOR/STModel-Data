@@ -10,7 +10,7 @@ STModel-Data
 
 	install.packages("RPostgreSQL")
 
-## Retrieve data from QUICC-FOR database
+## Retrieve data from the QUICC-FOR database
 
 #### Get tree data
 
@@ -30,7 +30,7 @@ STModel-Data
 
 ## Metadata
 
-#### pastClimate_grid csv file:
+#### pastClimate_grid:
 
 - **x** : x coordinate of the cell (longitude). i.e. x = 0 corresponds to min(longitude)
 - **y** : y coordinate of the cell (longitude). i.e. y = 0 corresponds to min(latitude)
@@ -38,9 +38,9 @@ STModel-Data
 - **env1**: average of the mean temperature (°C) between 1970-2000.
 - **env2**: average of the annual precipitation (meters) between 1970-2000.
 
-#### treeData csv file:
+#### treeData:
 
 - **plot_id** : Unique id of the plot
 - **year_measured** : year of the measurement
-- **id_spe**: Species code, details are in ./out_files/stm_code_species.csv file
+- **id_spe**: Species code, details are available in ./out_files/stm_code_species.csv file
 - **basal area**: basal area of the species in **m²/ha**
