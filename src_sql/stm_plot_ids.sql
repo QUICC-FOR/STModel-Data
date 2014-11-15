@@ -3,14 +3,13 @@
 -- Create a materialized view on each plot_id containing at least one tree of the species list with a dbh greater than 127 mm.
 -- Plots outside of the Eastern part of North America are filtered out (longitude > -97.0)
 
--- Drop and rebuilt: 
+-- Drop and rebuilt: rdb_quicc.stm_data
 
 DROP MATERIALIZED VIEW rdb_quicc.stm_data;
 
 CREATE MATERIALIZED VIEW rdb_quicc.stm_data AS (
 SELECT DISTINCT 
-	plot.plot_id, 
-	localisation.coord_postgis 
+	plot.plot_id
 FROM
 	rdb_quicc.tree
 INNER JOIN rdb_quicc.plot ON rdb_quicc.tree.plot_id = rdb_quicc.plot.plot_id
