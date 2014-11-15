@@ -3,7 +3,7 @@
 
 # This script extract all tree species needed by the stm model.
 ## ---------------------------------------------
-# Details on species are accessible in the file: ./out_files/stm_code_species.csv
+# Details on species codes: ./out_files/stm_code_species.csv
 
 # 18032-ABI-BAL: Balsam fir 
 # 18034-PIC-RUB: Red spruce 
@@ -84,7 +84,7 @@ SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area
 treeData <- dbGetQuery(con, query_treeData)
 ## Time: Approx. 3 minutes
 
-# Writing final tree dataset
+# Writing final trees dataset
 ## ---------------------------------------------
 
 write.table(treeData, file="out_files/treeData.csv", sep=',', row.names=FALSE)
