@@ -15,7 +15,7 @@ FROM
 INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
 INNER JOIN rdb_quicc.localisation USING (plot_id)
 INNER JOIN rdb_quicc.ref_species USING(id_spe)
-LEFT OUTER JOIN rdb_quicc.climatic_data USING (plot_id)
+INNER JOIN rdb_quicc.climatic_data USING (plot_id)
 WHERE tree.dbh > 126 AND plot.is_temp = False AND (
 tree.id_spe = '18032-ABI-BAL' OR
 tree.id_spe = '18034-PIC-RUB' OR
@@ -42,4 +42,5 @@ tree.id_spe = '183412-LAR-LAR' OR
 tree.id_spe = '195773-POP-TRE' ) 
 AND localisation.longitude > -97.0
 AND plot.plot_size IS NOT NULL
+AND climatic_data.plot_id IS NOT NULL
 ORDER BY plot_id ASC);
