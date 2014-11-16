@@ -48,7 +48,7 @@ Column        | Description
 **drainage**  | *coming soon* 
 **slope**     | *coming soon* (in degree)
 
-### climData
+### treeData
 
 Column        | Description
 ---           | ---
@@ -59,7 +59,7 @@ Column        | Description
 **drainage**  | *coming soon* 
 **slope**     | *coming soon* (in degree)
 
-### treeData 
+### climData 
 
 Column                                      | Description
 ---                                         | ---
