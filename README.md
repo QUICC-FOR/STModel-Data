@@ -10,23 +10,25 @@ STModel-Data
 
 	install.packages("RPostgreSQL")
 
-## Retrieve data from the QUICC-FOR database
+## Retrieve STM data from the QUICC-FOR database
 
-#### Get tree data
+	make all
 
-	R CMD BATCH get_treeData.r &
+##### Get only tree data
 
-#### Get climatic data
+	make get_treeData
 
-	R CMD BATCH get_climData.r &
+##### Get only climatic data
 
-#### Get plot info data
+	make get_climData
 
-	R CMD BATCH get_plotInfo.r &
+##### Get only plot info data
 
-#### Get past climate grid input
+	make get_plotInfo
 
-	R CMD BATCH get_pastClimate_grid.r &
+##### Get only past climate grid input
+
+	make get_pastClimate_grid
 
 ## Metadata
 

@@ -38,5 +38,7 @@ tree.id_spe = '183295-PIC-GLA' OR
 tree.id_spe = '183302-PIC-MAR' OR
 tree.id_spe = '183319-PIN-BAN' OR
 tree.id_spe = '183412-LAR-LAR' OR
-tree.id_spe = '195773-POP-TRE' ) AND localisation.longitude > -97.0
+tree.id_spe = '195773-POP-TRE' ) 
+AND localisation.longitude > -97.0
+AND plot.plot_size IS NOT NULL
 ORDER BY plot_id ASC);
