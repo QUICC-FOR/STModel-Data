@@ -35,11 +35,9 @@ In ```con_quicc_db.r```, replace ```dbuser``` and ```dbpass``` variables with yo
 
 ![Plots_distribution](./out_files/plots_map.png)
 
-## Metadata
+## Datasets metadata
 
-### Datasets
-
-#### plotInfoData
+### plotInfoData
 
 Column        | Description
 ---           | ---
@@ -50,7 +48,7 @@ Column        | Description
 **drainage**  | *Incoming* 
 **slope**     | *Incoming* (in degree)
 
-#### treeData 
+### treeData 
 
 Column            | Description
 ---               | ---
@@ -59,7 +57,7 @@ Column            | Description
 **id_spe**        | Species code, details are available in ./out_files/stm_code_species.csv file
 **basal area**    | basal area of the species in **m²/ha**
 
-#### pastClimate_grid
+### pastClimate_grid
 
 Column   | Description
 ---      | ---
@@ -69,9 +67,9 @@ Column   | Description
 **env1** | average of the mean temperature (°C) between 1970-2000.
 **env2** | average of the annual precipitation (meters) between 1970-2000.
 
-### Code
+## Code metadata
 
-#### Species
+### Species
 
 Code           | Species
 ---            | ---
@@ -99,4 +97,4 @@ Code           | Species
 183412-LAR-LAR | Tamarack
 195773-POP-TRE | Trembling aspen
 
-#### Drainage 
+### Drainage 
