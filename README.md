@@ -5,14 +5,13 @@ STModel-Data
 
 	git clone git@github.com:TheoreticalEcosystemEcology/STModel-Data.git
 	cd STModel-Data
+	make all
 
 ## Dependency
 
 	install.packages("RPostgreSQL")
 
 ## Retrieve STM data from the QUICC-FOR database
-
-	make all
 
 ##### Get only tree data
 
