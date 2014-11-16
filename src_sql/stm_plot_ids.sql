@@ -12,9 +12,10 @@ SELECT DISTINCT
 	plot.plot_id
 FROM
 	rdb_quicc.tree
-INNER JOIN rdb_quicc.plot ON rdb_quicc.tree.plot_id = rdb_quicc.plot.plot_id
-INNER JOIN rdb_quicc.localisation ON rdb_quicc.tree.plot_id = rdb_quicc.localisation.plot_id
-INNER JOIN rdb_quicc.ref_species ON rdb_quicc.tree.id_spe = rdb_quicc.ref_species.id_spe
+INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
+INNER JOIN rdb_quicc.localisation USING (plot_id)
+INNER JOIN rdb_quicc.ref_species USING(id_spe)
+LEFT OUTER JOIN rdb_quicc.climatic_data USING (id_plot)
 WHERE tree.dbh > 126 AND plot.is_temp = False AND (
 tree.id_spe = '18032-ABI-BAL' OR
 tree.id_spe = '18034-PIC-RUB' OR
