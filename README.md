@@ -3,16 +3,25 @@ STModel-Data
 
 ## Getting started
 
+#### 1. Download repository
+
 	git clone git@github.com:TheoreticalEcosystemEcology/STModel-Data.git
 	cd STModel-Data
-	make all
-
-## Dependencies
+	
+#### 2. Install R dependencies
 
 	install.packages("RPostgreSQL")
 	install.packages("ggmap")
 
-## Retrieve STM data from the QUICC-FOR database
+#### 3. Settings your account
+
+In ```con_quicc_db.r```, ```dbuser``` and ```dbpass``` variables must be setup with your account.
+
+#### 4. Get all datasets
+
+	make all
+
+## Retrieve dataset separately
 
 **Get only tree data**: ```make get_treeData```
 
@@ -28,17 +37,22 @@ STModel-Data
 
 ## Metadata
 
-#### pastClimate_grid:
+#### pastClimate_grid
 
-- **x** : x coordinate of the cell (longitude). i.e. x = 0 corresponds to min(longitude)
-- **y** : y coordinate of the cell (latitude). i.e. y = 0 corresponds to min(latitude)
-- **year**: year of the climate measurement. In the sql query, year column equal to 0 because the climate has been aggregated temporarily.
-- **env1**: average of the mean temperature (°C) between 1970-2000.
-- **env2**: average of the annual precipitation (meters) between 1970-2000.
 
-#### treeData:
+Column   | Description
+---      | ---
+**x**    | x coordinate of the cell (longitude). i.e. x = 0 corresponds to min(longitude)
+**y**    | y coordinate of the cell (latitude). i.e. y = 0 corresponds to min(latitude)
+**year** | year of the climate measurement. In the sql query, year column equal to 0 because the climate has been aggregated temporarily.
+**env1** | average of the mean temperature (°C) between 1970-2000.
+**env2** | average of the annual precipitation (meters) between 1970-2000.
 
-- **plot_id** : Unique id of the plot
-- **year_measured** : year of the measurement
-- **id_spe**: Species code, details are available in ./out_files/stm_code_species.csv file
-- **basal area**: basal area of the species in **m²/ha**
+#### treeData 
+
+Column            | Description
+---               | ---
+**plot_id**       | Unique id of the plot
+**year_measured** | year of the measurement
+**id_spe**        | Species code, details are available in ./out_files/stm_code_species.csv file
+**basal area**    | basal area of the species in **m²/ha**
