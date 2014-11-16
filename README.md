@@ -50,14 +50,12 @@ Column        | Description
 
 ### treeData
 
-Column        | Description
----           | ---
-**plot_id**   | Unique id of the plot
-**year** | year of the measurement
-**latitude**  | latitude of the plot (degree decimal)
-**srid**      | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
-**drainage**  | *coming soon* 
-**slope**     | *coming soon* (in degree)
+-Column | Description
+---- | ---
+-**plot_id** | Unique id of the plot
+-**year_measured** | year of the measurement
+-**id_spe** | Species code, details are available in ./out_files/stm_code_species.csv file
+-**basal area** | basal area of the species in **m²/ha**
 
 ### climData 
 
