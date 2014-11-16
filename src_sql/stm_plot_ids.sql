@@ -16,30 +16,13 @@ INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
 INNER JOIN rdb_quicc.localisation USING (plot_id)
 INNER JOIN rdb_quicc.ref_species USING(id_spe)
 INNER JOIN rdb_quicc.climatic_data USING (plot_id)
-WHERE tree.dbh > 126 AND plot.is_temp = False AND (
-tree.id_spe = '18032-ABI-BAL' OR
-tree.id_spe = '18034-PIC-RUB' OR
-tree.id_spe = '19408-QUE-RUB' OR
-tree.id_spe = '19462-FAG-GRA' OR
-tree.id_spe = '19466-ALN-NA' OR
-tree.id_spe = '19481-BET-ALL' OR
-tree.id_spe = '19489-BET-PAP' OR
-tree.id_spe = '19511-OST-VIR' OR
-tree.id_spe = '21536-TIL-AME' OR
-tree.id_spe = '22453-POP-BAL' OR
-tree.id_spe = '22463-POP-GRA' OR
-tree.id_spe = '24764-PRU-SER' OR
-tree.id_spe = '24799-PRU-PEN' OR
-tree.id_spe = '25319-SOR-AME' OR
-tree.id_spe = '28728-ACE-RUB' OR
-tree.id_spe = '28731-ACE-SAC' OR
-tree.id_spe = '32931-FRA-AME' OR
-tree.id_spe = '32945-FRA-NIG' OR
-tree.id_spe = '183295-PIC-GLA' OR
-tree.id_spe = '183302-PIC-MAR' OR
-tree.id_spe = '183319-PIN-BAN' OR
-tree.id_spe = '183412-LAR-LAR' OR
-tree.id_spe = '195773-POP-TRE' ) 
+WHERE tree.dbh > 126 AND plot.is_temp = False 
+AND id_spe IN ('18032-ABI-BAL','18034-PIC-RUB','19408-QUE-RUB',
+			'19462-FAG-GRA','19466-ALN-NA','19481-BET-ALL','19489-BET-PAP',
+			'19511-OST-VIR','21536-TIL-AME','22453-POP-BAL','22463-POP-GRA',
+			'24764-PRU-SER','24799-PRU-PEN','25319-SOR-AME','28728-ACE-RUB',
+			'28731-ACE-SAC','32931-FRA-AME','32945-FRA-NIG','183295-PIC-GLA',
+			'183302-PIC-MAR','183319-PIN-BAN','183412-LAR-LAR','195773-POP-TRE') 
 AND localisation.longitude > -97.0
 AND plot.plot_size IS NOT NULL
 AND climatic_data.plot_id IS NOT NULL
