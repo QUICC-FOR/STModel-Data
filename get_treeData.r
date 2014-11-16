@@ -77,7 +77,8 @@ SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area
 			'183302-PIC-MAR','183319-PIN-BAN','183412-LAR-LAR','195773-POP-TRE')
 		) AS get_other_tree_species_surf
 	GROUP BY plot_id, year_measured, plot_size
-) AS final_tree_data;
+) AS final_tree_data
+ORDER BY plot_id, year_measured, id_spe;
 "
 
 ## Send the query to the database
