@@ -24,8 +24,7 @@ STModel-Data
 
 ## Plots distribution
 
-![Plots_distribution](.out_files/plots_map.png)
-
+![Plots_distribution](./out_files/plots_map.png)
 
 ## Metadata
 

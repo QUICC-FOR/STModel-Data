@@ -13,6 +13,7 @@
 source('./con_quicc_db.r')
 
 # Load librairies
+library("ggmap")
 
 # Query 
 query_plotInfoData  <- "
@@ -37,13 +38,14 @@ write.table(res_plotInfoData, file="out_files/plotInfoData.csv", sep=',', row.na
 # Prepare map
 ## ---------------------------------------------
 
-theme_set(theme_grey(base_size = 18))
+theme_set(theme_grey(base_size = 12))
 
-long_range <- range(res_plotInfoData$lon)
+lon_range <- range(res_plotInfoData$lon)
 lat_range  <- range(res_plotInfoData$lat)
 
-qmap(maptype = 'terrain',extent ="normal",
-     location = c(range(res_plotInfoData$lon)[1],range(res_plotInfoData$lat)[1],range(res_plotInfoData$lon)[2],range(res_plotInfoData$lat)[2])) +
- geom_point(aes(x = lon, y = lat),data = res_plotInfoData,colour="firebrick1",size=1.2,alpha=0.5)+
-  scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+ 
-  xlab("Longitude") + ylab("Latitude")
+plots_map = qmap(zoom = 4, maptype = 'terrain',extent ="normal",
+     location = c(lon_range[1],lat_range[1],lon_range[2],lat_range[2])) +
+geom_point(aes(x = lon, y = lat),data = res_plotInfoData,colour="springgreen4",size=1.2,alpha=0.3)+
+scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+ 
+xlab("Longitude") + ylab("Latitude")
+ggsave(plots_map,file="./out_files/plots_map.png")
