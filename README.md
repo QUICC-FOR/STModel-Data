@@ -45,17 +45,55 @@ Column        | Description
 **longitude** | longitude of the plot (degree decimal)
 **latitude**  | latitude of the plot (degree decimal)
 **srid**      | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
-**drainage**  | *Incoming* 
-**slope**     | *Incoming* (in degree)
+**drainage**  | *coming soon* 
+**slope**     | *coming soon* (in degree)
+
+### climData
+
+Column        | Description
+---           | ---
+**plot_id**   | Unique id of the plot
+**year** | year of the measurement
+**latitude**  | latitude of the plot (degree decimal)
+**srid**      | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
+**drainage**  | *coming soon* 
+**slope**     | *coming soon* (in degree)
 
 ### treeData 
 
-Column            | Description
----               | ---
-**plot_id**       | Unique id of the plot
-**year_measured** | year of the measurement
-**id_spe**        | Species code, details are available in ./out_files/stm_code_species.csv file
-**basal area**    | basal area of the species in **m²/ha**
+Column                                      | Description
+---                                         | ---
+**plot_id**                                 | Unique id of the plot
+**year_measured**                           | year of the measurement
+**mean_diurnal_range**                      | Avg of monthly temperature ranges
+**isothermality**                           | mean_diurnal_range ÷ temp_annual_range
+**temp_seasonality**                        | Standard deviation of monthly-mean temperature estimates expressed as a percent of their mean
+**max_temp_warmest_period**                 | Highest monthly maximum temperature
+**min_temp_coldest_period**                 | Lowest monthly minimum temperature
+**temp_annual_range**                       | max_temp_warmest_period – min_temp_coldest_period
+**mean_temperatre_wettest_quarter**         | Avg temperature during 3 wettest months
+**mean_temp_driest_quarter**                | Avg temperature during 3 driest months
+**mean_temp_warmest_quarter**               | Avg temperature during 3 warmest months
+**mean_temp_coldest_quarter**               | Avg temperature during 3 coldest months
+**annual_pp**                               | Sum of monthly precipitation values
+**pp_wettest_period**                       | Precipitation of the wettest month
+**pp_driest_period**                        | Precipitation of the driest month
+**pp_seasonality**                          | Standard deviation of the monthly precipitation estimates expressed as a percent of their mean
+**pp_wettest_quarter**                      | Total precipitation of 3 wettest months
+**pp_driest_quarter**                       | Total precipitation of 3 driest months
+**pp_warmest_quarter**                      | Total precipitation of 3 warmest months
+**pp_coldest_quarter**                      | Total precipitation of 3 coldest months
+**julian_day_number_start_growing_season**  | Julian day number at start of growing season
+**julian_day_number_at_end_growing_season** | Julian day number at end of growing season
+**number_days_growing_season**              | Length of growing season (days)
+**total_pp_for_period_1**                   | Total precipitation 3 weeks prior to growing season
+**total_pp_for_period_3**                   | Total precipitation during the growing season
+**gdd_above_base_temp_for_period_3**        | Degree days (above 5ºC) for growing season Variable
+**annual_mean_temp**                        | Avg of mean monthly temperatures
+**annual_min_temp**                         | Avg of min monthly temperatures
+**annual_max_temp**                         | Avg of max monthly temperatures
+**mean_temp_for_period_3**                  | Average temperature during growing season
+**temp_range_for_period_3**                 | Highest maximum temperature minus lowest minimum temperature during growing
 
 ### pastClimate_grid
 
@@ -98,3 +136,5 @@ Code           | Species
 195773-POP-TRE | Trembling aspen
 
 ### Drainage 
+
+*coming soon*
