@@ -13,21 +13,13 @@ STModel-Data
 
 ## Retrieve STM data from the QUICC-FOR database
 
-##### Get only tree data
+**Get only tree data**: ```make get_treeData```
 
-	make get_treeData
+**Get only climatic data**: ```make get_climData```
 
-##### Get only climatic data
+**Get only plot info data**: ```make get_plotInfoData```
 
-	make get_climData
-
-##### Get only plot info data
-
-	make get_plotInfo
-
-##### Get only past climate grid input
-
-	make get_pastClimate_grid
+**Get only past climate grid input**: ```make get_pastClimate_grid```
 
 ## Metadata
 
