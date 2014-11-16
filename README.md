@@ -31,7 +31,7 @@ STModel-Data
 #### pastClimate_grid:
 
 - **x** : x coordinate of the cell (longitude). i.e. x = 0 corresponds to min(longitude)
-- **y** : y coordinate of the cell (longitude). i.e. y = 0 corresponds to min(latitude)
+- **y** : y coordinate of the cell (latitude). i.e. y = 0 corresponds to min(latitude)
 - **year**: year of the climate measurement. In the sql query, year column equal to 0 because the climate has been aggregated temporarily.
 - **env1**: average of the mean temperature (°C) between 1970-2000.
 - **env2**: average of the annual precipitation (meters) between 1970-2000.
