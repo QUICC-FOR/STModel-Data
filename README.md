@@ -13,9 +13,9 @@ STModel-Data
 	install.packages("RPostgreSQL")
 	install.packages("ggmap")
 
-#### 3. Settings your account
+#### 3. Setup your database account
 
-In ```con_quicc_db.r```, ```dbuser``` and ```dbpass``` variables must be setup with your account.
+In ```con_quicc_db.r```, replace ```dbuser``` and ```dbpass``` variables with your account. Your computer must be connected by wired on the UQAR network.
 
 #### 4. Get all datasets
 
@@ -37,8 +37,25 @@ In ```con_quicc_db.r```, ```dbuser``` and ```dbpass``` variables must be setup w
 
 ## Metadata
 
-#### pastClimate_grid
+### plotInfoData
 
+Column            | Description
+---               | ---
+**plot_id**       | Unique id of the plot
+**longitude** | longitude of the plot (degree decimal)
+**latitude**        | latitude of the plot (degree decimal)
+**srid**    | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
+
+### treeData 
+
+Column            | Description
+---               | ---
+**plot_id**       | Unique id of the plot
+**year_measured** | year of the measurement
+**id_spe**        | Species code, details are available in ./out_files/stm_code_species.csv file
+**basal area**    | basal area of the species in **m²/ha**
+
+### pastClimate_grid
 
 Column   | Description
 ---      | ---
@@ -47,12 +64,3 @@ Column   | Description
 **year** | year of the climate measurement. In the sql query, year column equal to 0 because the climate has been aggregated temporarily.
 **env1** | average of the mean temperature (°C) between 1970-2000.
 **env2** | average of the annual precipitation (meters) between 1970-2000.
-
-#### treeData 
-
-Column            | Description
----               | ---
-**plot_id**       | Unique id of the plot
-**year_measured** | year of the measurement
-**id_spe**        | Species code, details are available in ./out_files/stm_code_species.csv file
-**basal area**    | basal area of the species in **m²/ha**
