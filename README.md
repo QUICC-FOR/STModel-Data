@@ -7,9 +7,10 @@ STModel-Data
 	cd STModel-Data
 	make all
 
-## Dependency
+## Dependencies
 
 	install.packages("RPostgreSQL")
+	install.packages("ggmap")
 
 ## Retrieve STM data from the QUICC-FOR database
 
