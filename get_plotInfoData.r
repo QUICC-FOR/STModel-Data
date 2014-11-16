@@ -43,7 +43,7 @@ lat_range  <- range(res_plotInfoData$lat)
 
 plots_map = qmap(zoom = 4, maptype = 'terrain',extent ="normal",
      location = c(lon_range[1],lat_range[1],lon_range[2],lat_range[2])) +
-geom_point(aes(x = lon, y = lat),data = res_plotInfoData,colour="springgreen4",size=0.2,alpha=0.3)+
+geom_point(aes(x = lon, y = lat),data = res_plotInfoData,colour="springgreen4",size=0.4,alpha=0.3)+
 scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+ 
-xlab("Longitude") + ylab("Latitude") + theme(axis.title=element_text(face="bold",size=9),axis.text = element_text(size=9))
+xlab("Longitude") + ylab("Latitude") + theme(axis.title=element_text(size=6),axis.text = element_text(size=6))
 ggsave(plots_map,file="./out_files/plots_map.png",width=4,height=4)
