@@ -22,6 +22,11 @@ STModel-Data
 
 **Get only past climate grid input**: ```make get_pastClimate_grid```
 
+## Plots distribution
+
+![Plots_distribution](.out_files/plots_map.png)
+
+
 ## Metadata
 
 #### pastClimate_grid:
