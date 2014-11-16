@@ -3,7 +3,7 @@
 
 get_pastClimate_grid:
 	R CMD BATCH get_pastClimate_grid.r
-	rm *.Rout .Rdata
+	rm *.Rout .RData
 	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
 
 get_treeData:
@@ -13,15 +13,15 @@ get_treeData:
 
 get_climData:
 	R CMD BATCH get_climData.r
-	rm *.Rout .Rdata
+	rm *.Rout .RData
 	@echo "Query success and climData.csv transferred into out_files folder"
 
 get_plotInfoData:
 	R CMD BATCH get_plotInfoData.r
-	rm *.Rout .Rdata ggmapTemp.png
+	rm *.Rout .RData
 	@echo "Query success and plotInfo.csv transferred into out_files folder"
 
-all: get_treeData get_climData get_plotInfoData get_pastClimate_grid
+all: get_treeData get_plotInfoData get_pastClimate_grid
 
 clean: 
 	find ./out_files -name "*Data.csv" -exec rm -f {} \;
