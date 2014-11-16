@@ -93,6 +93,8 @@ Column                                      | Description
 **mean_temp_for_period_3**                  | Average temperature during growing season
 **temp_range_for_period_3**                 | Highest maximum temperature minus lowest minimum temperature during growing
 
+**Further details [here](http://journals.ametsoc.org/doi/pdf/10.1175/2011BAMS3132.1)**
+
 ### pastClimate_grid
 
 Column   | Description
