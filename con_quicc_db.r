@@ -6,7 +6,7 @@ require("RPostgreSQL")
 
 dbname <- "db_quicc_for"
 dbuser <- "vissst01"
-dbhost <- "srdb04.uqar.ca"
+dbhost <- "srbd04.uqar.ca"
 dbport <- 5432
 
 drv <- dbDriver("PostgreSQL")
