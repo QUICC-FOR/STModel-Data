@@ -9,13 +9,8 @@
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids;
 
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
-SELECT 
-	id_plots_flt.plot_id,
-	count(id_plots_flt.year_measured) AS n_meas
-FROM(
 	SELECT DISTINCT 
-		plot.plot_id,
-		year_measured
+		plot.plot_id
 	FROM
 		rdb_quicc.tree
 	INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
@@ -31,8 +26,6 @@ FROM(
 				'183302-PIC-MAR','183319-PIN-BAN','183412-LAR-LAR','195773-POP-TRE') 
 	AND localisation.longitude > -97.0
 	AND plot.plot_size IS NOT NULL
-	AND climatic_data.plot_id IS NOT NULL) as id_plots_flt
-GROUP BY id_plots_flt.plot_id
-HAVING count(id_plots_flt.year_measured) > 1
-)
-ORDER BY plot_id;
+	AND climatic_data.plot_id IS NOT NULL
+	ORDER BY plot_id
+);
