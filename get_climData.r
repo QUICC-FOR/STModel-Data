@@ -88,7 +88,7 @@ ORDER BY plot.plot_id, plot.year_measured
 
 ## Send the query to the database
 climData <- dbGetQuery(con, query_climData)
-## Time: Approx. 3 minutes
+## Time: Approx. 6 minutes
 
 # Writing final trees dataset
 ## ---------------------------------------------
