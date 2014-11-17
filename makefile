@@ -21,7 +21,7 @@ get_plotInfoData:
 	rm *.Rout .RData
 	@echo "Query success and plotInfo.csv transferred into out_files folder"
 
-all: get_treeData get_plotInfoData get_pastClimate_grid
+all: get_treeData get_climData get_plotInfoData get_pastClimate_grid
 
 clean: 
 	find ./out_files -name "*Data.csv" -exec rm -f {} \;

@@ -6,10 +6,9 @@ require("RPostgreSQL")
 
 dbname <- "quicc_for_dev"
 dbuser <- "postgres"
-dbpass <- "871126"
 dbhost <- "localhost"
 dbport <- 5433
 
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, host=dbhost, port=dbport, dbname=dbname,
-                 user=dbuser,password=dbpass) 
+                 user=dbuser) 
