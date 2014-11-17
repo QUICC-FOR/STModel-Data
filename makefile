@@ -8,7 +8,7 @@ get_pastClimate_grid:
 
 get_treeData:
 	R CMD BATCH get_treeData.r
-	rm *.Rout
+	rm *.Rout .RData
 	@echo "Query success and TreeData.csv transferred into out_files folder"
 
 get_climData:
