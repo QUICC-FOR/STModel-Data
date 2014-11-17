@@ -2,6 +2,7 @@
 
 -- Create a materialized view on each plot_id containing at least one tree of the species list with a dbh greater than 127 mm.
 -- Plots outside of the Eastern part of North America are filtered out (longitude > -97.0)
+-- Plots should be measured at least 2 times
 
 -- SQL Instructions dropping and rebuilding the view based on the criteria:
 
