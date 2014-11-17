@@ -34,4 +34,5 @@ FROM(
 	AND climatic_data.plot_id IS NOT NULL) as id_plots_flt
 GROUP BY id_plots_flt.plot_id
 HAVING count(id_plots_flt.year_measured) > 1
-);
+)
+ORDER BY plot_id;
