@@ -46,52 +46,52 @@
 source('./con_quicc_db.r')
 
 # Query 
-query_treeData  <- "
-SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area FROM(
-	SELECT plot_id, year_measured, id_spe, sum(surf_mm2)/1000000 as surf_spe_m2, plot_size FROM (
-			SELECT tree.plot_id, tree.year_measured,tree.tree_id,tree.id_spe,
-			 (((tree.dbh)/2)^2*pi()) as surf_mm2, plot.plot_size
-			FROM rdb_quicc.tree
-			RIGHT OUTER JOIN rdb_quicc.stm_plot_ids USING (plot_id)
-			LEFT OUTER JOIN rdb_quicc.plot USING (plot_id,year_measured)
-			WHERE dbh > 127 AND plot_size IS NOT NULL AND dbh IS NOT NULL 
-			AND id_spe IN ('18032-ABI-BAL','18034-PIC-RUB','19408-QUE-RUB',
-			'19462-FAG-GRA','19466-ALN-NA','19481-BET-ALL','19489-BET-PAP',
-			'19511-OST-VIR','21536-TIL-AME','22453-POP-BAL','22463-POP-GRA',
-			'24764-PRU-SER','24799-PRU-PEN','25319-SOR-AME','28728-ACE-RUB',
-			'28731-ACE-SAC','32931-FRA-AME','32945-FRA-NIG','183295-PIC-GLA',
-			'183302-PIC-MAR','183319-PIN-BAN','183412-LAR-LAR','195773-POP-TRE')
-		) AS get_individual_tree_surf
-	GROUP BY plot_id, year_measured, id_spe, plot_size 
-
-	UNION ALL
-
-	-- Other species
-	SELECT plot_id, year_measured, 'other species' As id_spe, sum(surf_mm2)/1000000 as surf_spe_m2, plot_size FROM (
-			SELECT tree.plot_id, tree.year_measured,tree.tree_id,tree.id_spe,
-			 (((tree.dbh)/2)^2*pi()) as surf_mm2, plot.plot_size
-			FROM rdb_quicc.tree
-			RIGHT OUTER JOIN rdb_quicc.stm_plot_ids USING (plot_id)
-			LEFT OUTER JOIN rdb_quicc.plot USING (plot_id,year_measured)
-			WHERE dbh > 127 AND plot_size IS NOT NULL AND dbh IS NOT NULL 
-			AND id_spe NOT IN ('18032-ABI-BAL','18034-PIC-RUB','19408-QUE-RUB',
-			'19462-FAG-GRA','19466-ALN-NA','19481-BET-ALL','19489-BET-PAP',
-			'19511-OST-VIR','21536-TIL-AME','22453-POP-BAL','22463-POP-GRA',
-			'24764-PRU-SER','24799-PRU-PEN','25319-SOR-AME','28728-ACE-RUB',
-			'28731-ACE-SAC','32931-FRA-AME','32945-FRA-NIG','183295-PIC-GLA',
-			'183302-PIC-MAR','183319-PIN-BAN','183412-LAR-LAR','195773-POP-TRE')
-		) AS get_other_tree_species_surf
-	GROUP BY plot_id, year_measured, plot_size
-) AS final_tree_data
-ORDER BY plot_id, year_measured, id_spe;
+query_climData  <- "
+SELECT 	plot.plot_id,
+	plot.year_measured,
+	avg(mean_diurnal_range) as mean_diurnal_range,
+	avg(isothermality) as isothermality,
+	avg(temp_seasonality) as temp_seasonality,
+	avg(max_temp_warmest_period) as max_temp_warmest_period,
+	avg(min_temp_coldest_period) as min_temp_coldest_period,
+	avg(temp_annual_range) as temp_annual_range,
+	avg(mean_temperatre_wettest_quarter) as mean_temperatre_wettest_quarter,
+	avg(mean_temp_driest_quarter) as mean_temp_driest_quarter,
+	avg(mean_temp_warmest_quarter) as mean_temp_warmest_quarter,
+	avg(mean_temp_coldest_quarter) as mean_temp_coldest_quarter,
+	avg(annual_pp) as annual_pp,
+	avg(pp_wettest_period) as pp_wettest_period,
+	avg(pp_driest_period) as pp_driest_period,
+	avg(pp_seasonality) as pp_seasonality,
+	avg(pp_wettest_quarter) as pp_wettest_quarter,
+	avg(pp_driest_quarter) as pp_driest_quarter,
+	avg(pp_warmest_quarter) as pp_warmest_quarter,
+	avg(pp_coldest_quarter) as pp_coldest_quarter,
+	avg(julian_day_number_start_growing_season) as julian_day_number_start_growing_season,
+	avg(julian_day_number_at_end_growing_season) as julian_day_number_at_end_growing_season,
+	avg(number_days_growing_season) as number_days_growing_season,
+	avg(total_pp_for_period_1) as total_pp_for_period_1,
+	avg(total_pp_for_period_3) as total_pp_for_period_3,
+	avg(gdd_above_base_temp_for_period_3) as gdd_above_base_temp_for_period_3,
+	avg(annual_mean_temp) as annual_mean_temp,
+	avg(annual_min_temp) as annual_min_temp,
+	avg(annual_max_temp) as annual_max_temp,
+	avg(mean_temp_for_period_3) as mean_temp_for_period_3,
+	avg(temp_range_for_period_3) as temp_range_for_period_3
+FROM rdb_quicc.climatic_data
+RIGHT OUTER JOIN rdb_quicc.stm_plot_ids USING (plot_id)
+LEFT OUTER JOIN rdb_quicc.plot USING (plot_id)
+WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
+GROUP BY plot.plot_id, plot.year_measured
+ORDER BY plot.plot_id, plot.year_measured
 "
 
 ## Send the query to the database
-treeData <- dbGetQuery(con, query_treeData)
+climData <- dbGetQuery(con, query_climData)
 ## Time: Approx. 3 minutes
 
 # Writing final trees dataset
 ## ---------------------------------------------
 
-write.table(treeData, file="out_files/treeData.csv", sep=',', row.names=FALSE)
+write.table(climData, file="out_files/climData.csv", sep=',', row.names=FALSE)
 

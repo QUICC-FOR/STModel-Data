@@ -35,7 +35,7 @@ In ```con_quicc_db.r```, replace ```dbuser``` and ```dbpass``` variables with yo
 
 ![Plots_distribution](./out_files/plots_map.png)
 
-## Datasets metadata
+## Metadata
 
 ### plotInfoData
 
@@ -50,12 +50,12 @@ Column        | Description
 
 ### treeData
 
--Column | Description
+Column | Description
 ---- | ---
--**plot_id** | Unique id of the plot
--**year_measured** | year of the measurement
--**id_spe** | Species code, details are available in ./out_files/stm_code_species.csv file
--**basal area** | basal area of the species in **m²/ha**
+**plot_id** | Unique id of the plot
+**year_measured** | year of the measurement
+**id_spe** | Species code, details are available in ./out_files/stm_code_species.csv file
+**basal area** | basal area of the species in **m²/ha**
 
 ### climData 
 
@@ -105,7 +105,7 @@ Column   | Description
 **env1** | average of the mean temperature (°C) between 1970-2000.
 **env2** | average of the annual precipitation (meters) between 1970-2000.
 
-## Code metadata
+## Code description
 
 ### Species
 

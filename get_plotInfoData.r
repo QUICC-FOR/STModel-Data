@@ -5,7 +5,6 @@
 # and create a map of the plots distribution across North America.
 ## ---------------------------------------------
 
-
 ## Get plots informations from quicc-for database
 ## ---------------------------------------------
 
