@@ -6,6 +6,7 @@ credentials.r
 .RData
 *.Rout
 ggmapTemp.png
+.Rapp.history
 
 ## Data
 
