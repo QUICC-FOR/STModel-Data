@@ -29,17 +29,17 @@ Your computer must be connected by wire on the UQAR network to connect to the da
 
 #### 4. Get all datasets
 
-	make all
+	make -j all
 
-## Retrieve dataset separately
+## Alternatively: Retrieve dataset separately
 
-**Get only tree data**: ```make get_treeData```
+**Get only tree data**: ```make treeData```
 
-**Get only climatic data**: ```make get_climData```
+**Get only climatic data**: ```make climData```
 
-**Get only plot info data**: ```make get_plotInfoData```
+**Get only plot info data**: ```make plotInfoData```
 
-**Get only past climate grid input**: ```make get_pastClimate_grid```
+**Get only past climate grid input**: ```make pastClimate_grid```
 
 ## Plots distribution
 
