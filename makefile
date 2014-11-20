@@ -1,28 +1,45 @@
 # Makefile to retrieve data from the QUICC-FOR database
-# November 15th, 2014
+# November 20, 2014
 
-get_pastClimate_grid:
-	R CMD BATCH get_pastClimate_grid.r
-	rm *.Rout .RData
-	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
+R_CMD = Rscript
+# use the below if you are old-fashioned or if Rscript doesn't work for some reason
+# R_CMD = R CMD BATCH
 
-get_treeData:
-	R CMD BATCH get_treeData.r
-	rm *.Rout .RData
-	@echo "Query success and TreeData.csv transferred into out_files folder"
 
-get_climData:
-	R CMD BATCH get_climData.r
-	rm *.Rout .RData
-	@echo "Query success and climData.csv transferred into out_files folder"
+# some convenience targets:
+all: treeData climData plotInfoData pastClimate_grid plotMap
+treeData: out_files/treeData.csv
+climData: out_files/climData.csv
+plotInfoData: out_files/plotInfoData.csv
+pastClimate_grid: out_files/pastClimate_grid.csv
+plotMap: out_files/plots_map.png
 
-get_plotInfoData:
-	R CMD BATCH get_plotInfoData.r
-	rm *.Rout .RData
-	@echo "Query success and plotInfo.csv transferred into out_files folder"
-
-all: get_treeData get_climData get_plotInfoData get_pastClimate_grid
-
-clean: 
+# remove all data files and R junk
+clean: cleanR
 	find ./out_files -name "*Data.csv" -exec rm -f {} \;
 	find ./out_files -name "*_grid.csv" -exec rm -f {} \;
+
+# removes junk created by R CMD BATCH
+cleanR:
+	rm -f *.Rout .RData
+
+
+out_files/treeData.csv: get_treeData.r con_quicc_db.r
+	$(R_CMD) get_treeData.r
+	@echo "Query success and treeData.csv transferred into out_files folder"
+
+out_files/climData.csv: get_climData.r con_quicc_db.r
+	$(R_CMD) get_climData.r
+	@echo "Query success and climData.csv transferred into out_files folder"
+
+out_files/plotInfoData.csv: get_plotInfoData.r con_quicc_db.r
+	$(R_CMD) get_plotInfoData.r
+	@echo "Query success and plotInfo.csv transferred into out_files folder"
+
+out_files/pastClimate_grid.csv: get_pastClimate_grid.r con_quicc_db.r
+	$(R_CMD) get_pastClimate_grid.r
+	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
+
+out_files/plots_map.png: out_files/plotInfoData.csv
+
+con_quicc_db.r: credentials.r

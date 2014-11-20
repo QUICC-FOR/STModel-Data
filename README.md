@@ -15,21 +15,31 @@ STModel-Data
 
 #### 3. Setup your database account
 
-In ```con_quicc_db.r```, replace ```dbuser``` and ```dbpass``` variables with your account. Your computer must be connected by wired on the UQAR network.
+Create a new file named ```credentials.r```.
+This file will store your database login. It is local only, and will not be tracked by git.
+This file should have two lines:
+
+```
+dbuser <- 'myUserName'
+dbpass <- 'myPassword'
+```
+
+Replace ```myUserName``` and  ```myPassword``` with your username and password.
+Your computer must be connected by wire on the UQAR network to connect to the database.
 
 #### 4. Get all datasets
 
-	make all
+	make -j all
 
-## Retrieve dataset separately
+## Alternatively: Retrieve dataset separately
 
-**Get only tree data**: ```make get_treeData```
+**Get only tree data**: ```make treeData```
 
-**Get only climatic data**: ```make get_climData```
+**Get only climatic data**: ```make climData```
 
-**Get only plot info data**: ```make get_plotInfoData```
+**Get only plot info data**: ```make plotInfoData```
 
-**Get only past climate grid input**: ```make get_pastClimate_grid```
+**Get only past climate grid input**: ```make pastClimate_grid```
 
 ## Plots distribution
 
