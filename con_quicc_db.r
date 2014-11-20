@@ -3,12 +3,12 @@
 
 #install.packages("RPostgreSQL")
 require("RPostgreSQL")
+source("credentials.r")
 
 dbname <- "db_quicc_for"
-dbuser <- "vissst01"
 dbhost <- "srbd04.uqar.ca"
 dbport <- 5432
 
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, host=dbhost, port=dbport, dbname=dbname,
-                 user=dbuser) 
+                 user=dbuser, password=dbpass) 
