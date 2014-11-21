@@ -37,12 +37,18 @@ write.table(res_plotInfoData, file="out_files/plotInfoData.csv", sep=',', row.na
 # Prepare and create map
 ## ---------------------------------------------
 
-lon_range <- range(res_plotInfoData$lon)
-lat_range  <- range(res_plotInfoData$lat)
+lon_med <- median(res_plotInfoData$lon)
+lat_med  <- median(res_plotInfoData$lat)
 
-plots_map = qmap(zoom = 4, maptype = 'terrain',extent ="normal",
-     location = c(lon_range[1],lat_range[1],lon_range[2],lat_range[2])) +
-geom_point(aes(x = lon, y = lat),data = res_plotInfoData,colour="springgreen4",size=0.4,alpha=0.3)+
+theme_set(theme_grey(base_size=10))
+quicc.map = get_map(location = c(lon=lon_med,lat=lat_med), zoom = 4)
+
+plots_map =ggmap(quicc.map, maprange=FALSE,extent = "normal") %+% res_plotInfoData + aes(x = lon, y = lat) +
+stat_density2d(aes(fill = ..level.., alpha = ..level..), bins = 25, geom = 'polygon',contour=TRUE) +
+geom_density2d(color="orange4",size=.2) +
+scale_fill_gradient(low = "orange", high = "orange4") +
 scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+ 
-xlab("Longitude") + ylab("Latitude") + theme(axis.title=element_text(size=6),axis.text = element_text(size=6))
+xlab("Longitude") + ylab("Latitude") +
+theme(legend.position = "none", text = element_text(size = 10))
+
 ggsave(plots_map,file="./out_files/plots_map.png",width=4,height=4)
