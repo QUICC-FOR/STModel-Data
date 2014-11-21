@@ -10,5 +10,7 @@ ggmapTemp.png
 
 ## Data
 
-/out_files/*_grid.csv
-/out_files/*Data.csv
+/out_files/*
+
+# python modules
+*.pyc
