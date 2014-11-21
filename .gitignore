@@ -9,8 +9,7 @@ ggmapTemp.png
 .Rapp.history
 
 ## Data
-
-/out_files/*
+/out_files/*.csv
 
 # python modules
 *.pyc
