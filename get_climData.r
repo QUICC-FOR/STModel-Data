@@ -47,43 +47,44 @@ source('./con_quicc_db.r')
 
 # Query 
 query_climData  <- "
-SELECT 	plot.plot_id,
-	plot.year_measured,
-	avg(mean_diurnal_range) as mean_diurnal_range,
-	avg(isothermality) as isothermality,
-	avg(temp_seasonality) as temp_seasonality,
-	avg(max_temp_warmest_period) as max_temp_warmest_period,
-	avg(min_temp_coldest_period) as min_temp_coldest_period,
-	avg(temp_annual_range) as temp_annual_range,
-	avg(mean_temperatre_wettest_quarter) as mean_temperatre_wettest_quarter,
-	avg(mean_temp_driest_quarter) as mean_temp_driest_quarter,
-	avg(mean_temp_warmest_quarter) as mean_temp_warmest_quarter,
-	avg(mean_temp_coldest_quarter) as mean_temp_coldest_quarter,
-	avg(annual_pp) as annual_pp,
-	avg(pp_wettest_period) as pp_wettest_period,
-	avg(pp_driest_period) as pp_driest_period,
-	avg(pp_seasonality) as pp_seasonality,
-	avg(pp_wettest_quarter) as pp_wettest_quarter,
-	avg(pp_driest_quarter) as pp_driest_quarter,
-	avg(pp_warmest_quarter) as pp_warmest_quarter,
-	avg(pp_coldest_quarter) as pp_coldest_quarter,
-	avg(julian_day_number_start_growing_season) as julian_day_number_start_growing_season,
-	avg(julian_day_number_at_end_growing_season) as julian_day_number_at_end_growing_season,
-	avg(number_days_growing_season) as number_days_growing_season,
-	avg(total_pp_for_period_1) as total_pp_for_period_1,
-	avg(total_pp_for_period_3) as total_pp_for_period_3,
-	avg(gdd_above_base_temp_for_period_3) as gdd_above_base_temp_for_period_3,
-	avg(annual_mean_temp) as annual_mean_temp,
-	avg(annual_min_temp) as annual_min_temp,
-	avg(annual_max_temp) as annual_max_temp,
-	avg(mean_temp_for_period_3) as mean_temp_for_period_3,
-	avg(temp_range_for_period_3) as temp_range_for_period_3
-FROM rdb_quicc.climatic_data
-RIGHT OUTER JOIN rdb_quicc.stm_plot_ids USING (plot_id)
-LEFT OUTER JOIN rdb_quicc.plot USING (plot_id)
-WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
-GROUP BY plot.plot_id, plot.year_measured
-ORDER BY plot.plot_id, plot.year_measured
+SELECT * FROM (
+	SELECT 	plot.plot_id,
+		plot.year_measured,
+		avg(mean_diurnal_range) as mean_diurnal_range,
+		avg(isothermality) as isothermality,
+		avg(temp_seasonality) as temp_seasonality,
+		avg(max_temp_warmest_period) as max_temp_warmest_period,
+		avg(min_temp_coldest_period) as min_temp_coldest_period,
+		avg(temp_annual_range) as temp_annual_range,
+		avg(mean_temperatre_wettest_quarter) as mean_temperatre_wettest_quarter,
+		avg(mean_temp_driest_quarter) as mean_temp_driest_quarter,
+		avg(mean_temp_warmest_quarter) as mean_temp_warmest_quarter,
+		avg(mean_temp_coldest_quarter) as mean_temp_coldest_quarter,
+		avg(annual_pp) as annual_pp,
+		avg(pp_wettest_period) as pp_wettest_period,
+		avg(pp_driest_period) as pp_driest_period,
+		avg(pp_seasonality) as pp_seasonality,
+		avg(pp_wettest_quarter) as pp_wettest_quarter,
+		avg(pp_driest_quarter) as pp_driest_quarter,
+		avg(pp_warmest_quarter) as pp_warmest_quarter,
+		avg(pp_coldest_quarter) as pp_coldest_quarter,
+		avg(julian_day_number_start_growing_season) as julian_day_number_start_growing_season,
+		avg(julian_day_number_at_end_growing_season) as julian_day_number_at_end_growing_season,
+		avg(number_days_growing_season) as number_days_growing_season,
+		avg(total_pp_for_period_1) as total_pp_for_period_1,
+		avg(total_pp_for_period_3) as total_pp_for_period_3,
+		avg(gdd_above_base_temp_for_period_3) as gdd_above_base_temp_for_period_3,
+		avg(annual_mean_temp) as annual_mean_temp,
+		avg(annual_min_temp) as annual_min_temp,
+		avg(annual_max_temp) as annual_max_temp,
+		avg(mean_temp_for_period_3) as mean_temp_for_period_3,
+		avg(temp_range_for_period_3) as temp_range_for_period_3
+	FROM rdb_quicc.climatic_data
+	LEFT JOIN rdb_quicc.plot USING (plot_id)
+	WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
+	GROUP BY plot.plot_id, plot.year_measured
+	ORDER BY plot.plot_id, plot.year_measured) clim_coars_data
+RIGHT JOIN rdb_quicc.stm_plot_ids USING (plot_id,year_measured)
 "
 
 ## Send the query to the database

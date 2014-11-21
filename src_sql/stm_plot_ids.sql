@@ -10,7 +10,8 @@ DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids;
 
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
 	SELECT DISTINCT 
-		plot.plot_id
+		plot.plot_id,
+		plot.year_measured
 	FROM
 		rdb_quicc.tree
 	INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
