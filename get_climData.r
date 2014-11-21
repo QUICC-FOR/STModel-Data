@@ -82,9 +82,9 @@ SELECT * FROM (
 	FROM rdb_quicc.climatic_data
 	LEFT JOIN rdb_quicc.plot USING (plot_id)
 	WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
-	GROUP BY plot.plot_id, plot.year_measured
-	ORDER BY plot.plot_id, plot.year_measured) clim_coars_data
+	GROUP BY plot.plot_id, plot.year_measured) as clim_coarse_data
 RIGHT JOIN rdb_quicc.stm_plot_ids USING (plot_id,year_measured)
+ORDER BY plot_id, year_measured;
 "
 
 ## Send the query to the database
