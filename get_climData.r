@@ -79,8 +79,8 @@ SELECT 	plot.plot_id,
 	avg(mean_temp_for_period_3) as mean_temp_for_period_3,
 	avg(temp_range_for_period_3) as temp_range_for_period_3
 FROM rdb_quicc.climatic_data
-RIGHT OUTER JOIN rdb_quicc.stm_plot_ids USING (plot_id)
-LEFT OUTER JOIN rdb_quicc.plot USING (plot_id)
+RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plot_ids) as constraint_plot USING (plot_id)
+LEFT JOIN rdb_quicc.plot USING (plot_id)
 WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
 GROUP BY plot.plot_id, plot.year_measured
 ORDER BY plot.plot_id, plot.year_measured
