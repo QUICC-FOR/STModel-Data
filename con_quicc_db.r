@@ -11,4 +11,4 @@ dbport <- 5432
 
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, host=dbhost, port=dbport, dbname=dbname,
-                 user=dbuser, password=dbpass) 
+                 user=dbuser, password=dbpass)
