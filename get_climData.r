@@ -48,8 +48,8 @@ source('./con_quicc_db.r')
 # Query 
 query_climData  <- "
 SELECT * FROM (
-	SELECT 	plot.plot_id,
-		plot.year_measured,
+	SELECT 	stm_plot_ids.plot_id,
+		stm_plot_ids.year_measured,
 		avg(mean_diurnal_range) as mean_diurnal_range,
 		avg(isothermality) as isothermality,
 		avg(temp_seasonality) as temp_seasonality,
@@ -80,9 +80,9 @@ SELECT * FROM (
 		avg(mean_temp_for_period_3) as mean_temp_for_period_3,
 		avg(temp_range_for_period_3) as temp_range_for_period_3
 	FROM rdb_quicc.climatic_data
-	LEFT JOIN rdb_quicc.plot USING (plot_id)
-	WHERE climatic_data.year_clim <= plot.year_measured AND climatic_data.year_clim > (plot.year_measured-15)
-	GROUP BY plot.plot_id, plot.year_measured) as clim_coarse_data
+	LEFT JOIN rdb_quicc.stm_plot_ids USING (plot_id)
+	WHERE climatic_data.year_clim <= stm_plot_ids.year_measured AND climatic_data.year_clim > (stm_plot_ids.year_measured-15)
+	GROUP BY stm_plot_ids.plot_id, stm_plot_ids.year_measured) as clim_coarse_data
 RIGHT JOIN rdb_quicc.stm_plot_ids USING (plot_id,year_measured)
 ORDER BY plot_id, year_measured;
 "
