@@ -86,14 +86,7 @@ def read_climate(filename, plots, indices={'id':0, 'year':1}, delim=','):
                 print("Warning: tried to add climate for plot number " + str(curPlotID) \
                      + " when no such plot exists")
             else:
-                try:
-                    curSample = curPlot.samples[year]
-                except KeyError:
-                    print("Warning: tried to add climate for plot number " + \
-                        str(curPlotID) + " for year " + str(year) + \
-                        "; year does not exist for that plot")
-                else:
-                    curSample.add_climate(vals)
+                curPlot.samples[year] = Sample(year, vals)
         
 
 def read_trees(filename, plots, indices={'id':0, 'year':1, 'species':2, \
@@ -224,11 +217,13 @@ class Plot(_QCTransitionBase):
         self._transitionsAreDirty = True
         if year is None or ba is None or species is None:
             raise ValueError("Tried to add tree with missing data")
-        if year not in self.samples:
-            self.samples[year] = Sample(year, self._twoStateSpecies)
-        samp = self.samples[year]
+        try:
+            samp = self.samples[year]
+        except KeyError:
+            raise RuntimeError("Tried to add tree to plot " + str(self._data["plot"]) + \
+                    " for year " + str(year) + "; no climate exists")
         samp.add_tree(species, ba)
-        
+            
     def _compute_transitions(self):
         """Step through all sample years and determine transitions between valid states"""
         years = sorted(self.samples.keys())
@@ -278,15 +273,15 @@ class Sample(_QCTransitionBase):
         if twoStateSpecies is not None, the two state model is used, and the get_state 
         function will be re-mapped to _is_present()
         """
-    def __init__(self, year, twoStateSpecies = None):
+    def __init__(self, year, climate, twoStateSpecies = None):
         super(Sample, self).__init__(year, 'year')
         self._data['state'] = 'NoStateHere'
         self._species = {}  # keyed by species code, values are basal area
         self._totalBA = 0
         self._bBA = 0
         self._tBA = 0
-        self._stateIsDirty = False
-        self.hasClimate = False
+        self._stateIsDirty = True
+        self._data.update(climate)
         if twoStateSpecies is not None:
             self._data['species'] = twoStateSpecies
             self._get_state = self._is_present
@@ -314,11 +309,6 @@ class Sample(_QCTransitionBase):
             return self._data
         else:
             return super(Sample, self).get_data(method, header)
-
-    def add_climate(self, climate):
-        if climate is not None:
-            self._data.update(climate)
-            self.hasClimate = True
 
     def _get_state(self):
         """State function; computes the state of the sample and sets it in the _state
@@ -355,7 +345,7 @@ def print_plot_summary(plots):
     minYr = 2014
     maxYr = 0
     baMean = 0
-    states = {'T':0, 'B':0, 'M':0, 'R':0, 'U':0}
+    states = {'T':0, 'B':0, 'M':0, 'R':0, 'U':0, 'NoStateHere':0}
     for id in plots:
         curPlot = plots[id]
         for yr in curPlot.samples:
