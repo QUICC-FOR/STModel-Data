@@ -13,3 +13,6 @@ ggmapTemp.png
 
 # python modules
 *.pyc
+
+#Personal config
+con_quicc_db_local.r

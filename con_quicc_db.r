@@ -5,9 +5,9 @@
 require("RPostgreSQL")
 source("credentials.r")
 
-dbname <- "db_quicc_for"
-dbhost <- "srbd04.uqar.ca"
-dbport <- 5432
+dbname <- "quicc_for_dev"
+dbhost <- "localhost"
+dbport <- 5433
 
 drv <- dbDriver("PostgreSQL")
 con <- dbConnect(drv, host=dbhost, port=dbport, dbname=dbname,
