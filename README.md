@@ -64,7 +64,7 @@ Column | Description
 ---- | ---
 **plot_id** | Unique id of the plot
 **year_measured** | year of the measurement
-**id_spe** | Species code, details are available in ./out_files/stm_code_species.csv file
+**id_spe** | Species code, details are available in ./stm_code_species.csv file
 **basal area** | basal area of the species in **m²/ha**
 
 ### climData 

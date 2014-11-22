@@ -1,0 +1,24 @@
+"id_spe","tsn","genus","species","en_common_name","fr_common_name","qc_code","on_tree_code","on_alpha_code","us_code","nb_code"
+"18032-ABI-BAL",18032,"Abies","balsamea","Balsam fir ,balsam fir","Sapin baumier","SAB",20,"Bf",12,5
+"18034-PIC-RUB",18034,"Picea","rubens","Red spruce ,red spruce","Épinette rouge","EPR",14,"Sr",97,3
+"19408-QUE-RUB",19408,"Quercus","rubra","Red oak ,northern red oak","Chêne rouge","CHR",41,"Or",833,17
+"19462-FAG-GRA",19462,"Fagus","grandifolia","American beech ,American beech","Hêtre à grandes feuilles","HEG",44,"Be",531,15
+"19466-ALN-NA",19466,"Alnus","","alder","Saule","SAL","",350,22
+"19481-BET-ALL",19481,"Betula","alleghaniensis","Yellow birch ,yellow birch","Bouleau jaune","BOJ",37,"By",371,14
+"19489-BET-PAP",19489,"Betula","papyrifera","White birch,paper birch ,paper birch","Bouleau blanc (à papier)","BOP",38,"Bw",375,19
+"19511-OST-VIR",19511,"Ostrya","virginiana","Ironwood ,eastern hophornbeam","Ostryer de Virginie","OSV",56,"Id",701,16
+"21536-TIL-AME",21536,"Tilia","americana","Basswood ,white basswood","'Tilleul d''Amérique'","TIL",51,"Bd",952,
+"22453-POP-BAL",22453,"Populus","balsamifera","Balsam poplar ,balsam poplar","Peuplier baumier","PEB",73,"Pb",741,183
+"22463-POP-GRA",22463,"Populus","grandidentata","Large tooth aspen ,bigtooth aspen","Peuplier à grandes dents","PEG",70,"Al",743,21
+"24764-PRU-SER",24764,"Prunus","serotina","Black cherry ,Prunus serotina","Cerisier tardif","CET",58,"Cb",8349,194
+"24799-PRU-PEN",24799,"Prunus","pensylvanica","Pin cherry ,pin cherry","Cerisier de Pennsylvanie","PRP",139,"",761,159
+"25319-SOR-AME",25319,"Sorbus","americana","American mountain-ash","'Sorbier d''Amérique'","SOA","",935,25
+"28728-ACE-RUB",28728,"Acer","rubrum","Red maple (soft) ,red maple","Érable rouge","ERR",32,"Mr",316,12
+"28731-ACE-SAC",28731,"Acer","saccharum","Sugar maple (hard) ,sugar maple","Érable à sucre","ERS",30,"Mh",318,13
+"32931-FRA-AME",32931,"Fraxinus","americana","White ash ,white ash","'Frêne d''Amérique'","FRA",46,"Aw",541,18
+"32945-FRA-NIG",32945,"Fraxinus","nigra","Black ash ,black ash","Frêne noir","FRN",45,"Ab",543,172
+"183295-PIC-GLA",183295,"Picea","glauca","White spruce ,white spruce","Épinette blanche","EPB",12,"Sw",94,2
+"183302-PIC-MAR",183302,"Picea","mariana","Black spruce ,black spruce","Épinette noire","EPN",13,"Sb",95,1
+"183319-PIN-BAN",183319,"Pinus","banksiana","jack pine","Pin gris","PIG","",105,
+"183412-LAR-LAR",183412,"Larix","laricina","Tamarack ,tamarack (native)","Mélèze laricin","MEL",25,"La",71,11
+"195773-POP-TRE",195773,"Populus","tremuloides","Trembling aspen ,quaking aspen","Peuplier faux tremble","PET",74,"At",746,20
