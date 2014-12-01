@@ -19,7 +19,7 @@ states: out_files/statesFourState.csv
 
 # remove all data files and R junk
 clean: cleanR
-	find ./out_files -name "*.csv" -exec rm -f {} \;
+	rm -f out_files/*.csv
 
 # removes junk created by R CMD BATCH
 cleanR:
