@@ -166,9 +166,9 @@ class _QCTransitionBase(object):
 
 
 class Plot(_QCTransitionBase):
-    """Create a plot with no samples (can be added using add_sample()
+    """Create a plot with no samples (can be added using add_sample())
     
-    Climate information must be added completely (using climate.add_climate_record() 
+    Climate information must be added completely (using climate.add_climate_record() )
     BEFORE adding samples 
     if twoStateSpeces is None, then the four-state model will be used"""
     def __init__(self, id, latitude = None, longitude = None, twoStateSpecies = None):
@@ -242,23 +242,20 @@ class Transition(_QCTransitionBase):
     keys is a list of keys to use from the samples
     if keys is None or an empty list, ALL keys from the samples will be used
     """
-    def __init__(self, sample1, sample2, keys=['year', 'state', 'annual_pp', \
-            'annual_mean_temp']):
+    def __init__(self, sample1, sample2, seperateKeys = ['state', 'year']):
         s1dat = sample1.get_data('dict')
         s2dat = sample2.get_data('dict')
         super(Transition, self).__init__(abs(s1dat['year'] - s2dat['year']), 'interval')
                 
-        if keys is None or len(keys) == 0:
-            keys = s1dat.keys()
-        for k in keys:
-            try:
+        for k in s1dat:
+            if k in seperateKeys:
                 self._data[k + '1'] = s1dat[k]
-            except KeyError:
-                self._data[k + '1'] = None
-            try:
                 self._data[k + '2'] = s2dat[k]
-            except KeyError:
-                self._data[k + '2'] = None
+            else:
+                try:
+                    self._data[k] = (s1dat[k] + s2dat[k])/2.0
+                except KeyError:
+                    self._data[k] = None
                 
     def states(self):
         return (self._data['state1'], self._data['state2'])
