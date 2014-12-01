@@ -38,7 +38,7 @@ for data, outFile in zip(dataSources, (outputFileTr, outputFileSt)):
                 hdr = plots.values()[i].get_data(data, method, header=True)
             except IndexError:
                 i = i+1
-        print(hdr, file=of)
+        print(hdr[0], file=of)
         # print data for each plot
         for id in plots:
             pl = plots[id]
