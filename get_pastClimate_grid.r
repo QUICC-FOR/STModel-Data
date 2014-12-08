@@ -1,4 +1,4 @@
-# Prepare past climate grid input 
+# Prepare past climate grid input
 # Date: November 13th, 2014
 
 # This script prepare grid of the past climate for the province of Quebec.
@@ -28,16 +28,16 @@ source('./con_quicc_db.r')
 #Load librairies
 require('reshape2')
 
-# Query 
+# Query
 query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 		SELECT biovar, (ST_PixelAsCentroids(rasters, 1, false)).* FROM (
 		SELECT biovar, ST_Union(ST_Clip(rast_world.rast,env_qc.env),'MEAN') as rasters
-		FROM 
-		(SELECT rast, biovar FROM past_clim_rs.clim_biovars
-			WHERE (year_measured > 1970 OR year_measured < 2000) 
-			AND (biovar = 'annual_pp' OR biovar = 'annual_mean_temp')) AS rast_world,
+		FROM
+		(SELECT rast, biovar FROM clim_rs.clim_biovars
+			WHERE (year_measured > 1970 OR year_measured < 2000)
+			AND (biovar = 'annual_pp' OR biovar = 'annual_mean_temp')) AS rast_noram,
 		(SELECT ST_Envelope(geom) as env FROM map_world.can_adm1 WHERE name_1 = 'Québec') AS env_qc
-		WHERE ST_Intersects(rast_world.rast,env_qc.env)
+		WHERE ST_Intersects(rast_noram.rast,env_qc.env)
 		GROUP BY biovar) AS union_query
 		) AS points_query;"
 
@@ -48,7 +48,7 @@ res_pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
 # Reshaping and writing grid dataset
 ## ---------------------------------------------
 
-pastClimate_grid = res_pastClimate_grid 
+pastClimate_grid = res_pastClimate_grid
 
 ## Reshape
 pastClimate_grid$biovar <- as.factor(pastClimate_grid$biovar)
@@ -72,7 +72,7 @@ conv_func <-function(x,conv){
 pastClimate_grid$annual_pp <- conv_func(pastClimate_grid$annual_pp,1000)
 pastClimate_grid$annual_mean_temp <- conv_func(pastClimate_grid$annual_mean_temp,10)
 
-## Add year columns and rename all dataset columns 
+## Add year columns and rename all dataset columns
 names(pastClimate_grid)[3:4] <- c("env1","env2")
 pastClimate_grid$year <- rep(0, nrow(pastClimate_grid))
 pastClimate_grid <- pastClimate_grid[, c("x","y","year","env1","env2")]
