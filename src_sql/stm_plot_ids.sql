@@ -7,7 +7,7 @@
 -- SQL Instructions dropping and rebuilding the view based on the criteria:
 
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids;
-
+DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
 	SELECT DISTINCT
 		plot.plot_id,
@@ -25,18 +25,12 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
 
 DROP MATERIALIZED VIEW IF EXISTS clim_rs.clim_00_70_stm CASCADE;
 CREATE MATERIALIZED VIEW clim_rs.clim_00_70_stm AS (
-SELECT biovar,year_clim, rast_noram.rast
+SELECT biovar,year_clim, ST_Union(rast_noram.rast) as union_raster
    FROM
             (SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars
                 WHERE (year_clim >= 1970 AND year_clim <= 2000)
                 AND biovar IN ('annual_mean_temp', 'pp_seasonality', 'pp_warmest_quarter', 'mean_diurnal_range','tot_annual_pp', 'mean_temperature_wettest_quarter')
                 ) AS rast_noram,
             (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) AS env_stm
-WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots));
-
-DROP MATERIALIZED VIEW IF EXISTS clim_rs.clim_00_70_stm_union;
-CREATE MATERIALIZED VIEW clim_rs.clim_00_70_qc_union AS (
-    SELECT biovar, year_clim, ST_FasterUnion('clim_rs', 'clim_00_70_stm', 'rast') as union_raster
-    FROM
-        clim_rs.clim_00_70_stm
-    GROUP BY biovar,year_clim);
+WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
+GROUP BY biovar,year_clim);

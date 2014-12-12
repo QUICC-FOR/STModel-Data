@@ -32,7 +32,7 @@ require('reshape2')
 query_pastClimate_grid  <- "SELECT ST_X(geom) as longitude, ST_Y(geom) as latitude, val, biovar FROM (
         SELECT biovar, (ST_PixelAsCentroids(clipped_raster)).* FROM (
 		SELECT biovar, ST_Union(ST_Clip(union_raster,env_stm.env_plots),'MEAN') as clipped_raster
-		FROM clim_rs.clim_00_70_qc_union,
+		FROM clim_rs.clim_00_70_stm,
 		(SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) as env_stm
 		GROUP BY biovar
 	) as pixels
