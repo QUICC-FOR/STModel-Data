@@ -23,23 +23,20 @@
 ## ---------------------------------------------
 
 # Database connection
-source('./con_quicc_db.r')
+source('./con_quicc_db_local.r')
 
 #Load librairies
 require('reshape2')
 
 # Query
-query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
-		SELECT biovar, (ST_PixelAsCentroids(rasters, 1, false)).* FROM (
-		SELECT biovar, ST_Union(ST_Clip(rast_noram.rast,env_qc.env),'MEAN') as rasters
-		FROM
-		(SELECT rast, biovar FROM clim_rs.clim_allbiovars
-			WHERE (year_clim > 1970 OR year_clim < 2000)
-			AND (biovar = 'annual_pp' OR biovar = 'annual_mean_temp')) AS rast_noram,
-		(SELECT ST_Envelope(geom) as env FROM map_world.can_adm1 WHERE name_1 = 'Québec') AS env_qc
-		WHERE ST_Intersects(rast_noram.rast,env_qc.env)
-		GROUP BY biovar) AS union_query
-		) AS points_query;"
+query_pastClimate_grid  <- "SELECT ST_X(geom) as longitude, ST_Y(geom) as latitude, val, biovar FROM (
+        SELECT biovar, (ST_PixelAsCentroids(clipped_raster)).* FROM (
+		SELECT biovar, ST_Union(ST_Clip(union_raster,env_stm.env_plots),'MEAN') as clipped_raster
+		FROM clim_rs.clim_00_70_qc_union,
+		(SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) as env_stm
+		GROUP BY biovar
+	) as pixels
+) as coords;"
 
 ## Send the query to the database
 res_pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
