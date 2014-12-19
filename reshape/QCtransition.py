@@ -314,7 +314,7 @@ class Sample(_QCTransitionBase):
         The definition of this function is synonymous with the definition of the states    
         """
         self._stateIsDirty = False
-        if self._totalBA < 10:
+        if self._totalBA < 1:
             self._data['state'] = 'R'
         elif self._tBA > 0 and self._bBA == 0:
             self._data['state'] = 'T'
