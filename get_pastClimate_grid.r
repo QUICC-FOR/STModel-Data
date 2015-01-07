@@ -29,14 +29,17 @@ source('./con_quicc_db_local.r')
 require('reshape2')
 
 # Query
-query_pastClimate_grid  <- "SELECT ST_X(geom) as longitude, ST_Y(geom) as latitude, val, biovar FROM (
-        SELECT biovar, (ST_PixelAsCentroids(clipped_raster)).* FROM (
-		SELECT biovar, ST_Union(ST_Clip(union_raster,env_stm.env_plots),'MEAN') as clipped_raster
-		FROM clim_rs.clim_00_70_stm,
-		(SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) as env_stm
-		GROUP BY biovar
-	) as pixels
-) as coords;"
+query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
+	SELECT biovar, (ST_PixelAsCentroids(rasters, 1, false)).* FROM (
+	SELECT biovar, ST_Union(ST_Clip(rast,env_stm.env_plots),'MEAN') as rasters
+	FROM
+	(SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars
+     WHERE (year_clim >= 1970 AND year_clim <= 2000)
+	AND biovar IN ('annual_mean_temp', 'pp_seasonality', 'pp_warmest_quarter', 'mean_diurnal_range','tot_annual_pp', 'mean_temperature_wettest_quarter')) AS rast_noram,
+    (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) AS env_stm
+	WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
+	GROUP BY biovar) AS union_query
+) AS points_query;"
 
 ## Send the query to the database
 res_pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
@@ -66,13 +69,12 @@ conv_func <-function(x,conv){
 	return(res)
 }
 
-pastClimate_grid$annual_pp <- conv_func(pastClimate_grid$annual_pp,1000)
-pastClimate_grid$annual_mean_temp <- conv_func(pastClimate_grid$annual_mean_temp,10)
+pastClimate_grid$annual_pp <- conv_func(pastClimate_grid$tot_annual_pp,1000)
 
 ## Add year columns and rename all dataset columns
-names(pastClimate_grid)[3:4] <- c("env1","env2")
+names(pastClimate_grid)[3:ncol(pastClimate_grid)] <- paste("env",seq(1,ncol(pastClimate_grid)-2,1),sep="")
 pastClimate_grid$year <- rep(0, nrow(pastClimate_grid))
-pastClimate_grid <- pastClimate_grid[, c("x","y","year","env1","env2")]
+pastClimate_grid <- pastClimate_grid[, c(1,2,ncol(pastClimate_grid),4:ncol(pastClimate_grid)-1)]
 
 ## Write
 write.table(pastClimate_grid, file="out_files/pastClimate_grid.csv", sep=',', row.names=FALSE)
