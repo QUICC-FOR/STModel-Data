@@ -6,7 +6,6 @@
 
 -- SQL Instructions dropping and rebuilding the view based on the criteria:
 
-DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids;
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plot_ids CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plot_ids AS (
 	SELECT DISTINCT
