@@ -12,6 +12,13 @@ STModel-Data
 
 	install.packages("RPostgreSQL")
 	install.packages("ggmap")
+	
+Note for mac users: this may fail if pg_config is not in your path. If so, you need to
+install psql first. This is easiest with macports:
+
+	sudo port install postgresql93
+	sudo ln -s /opt/local/lib/postgresql93/bin/pg_config /opt/local/bin
+	install.packages("RPostgreSQL", type='source')
 
 #### 3. Setup your database account
 
