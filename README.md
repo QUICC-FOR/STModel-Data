@@ -7,17 +7,17 @@ STModel-Data
 
 	git clone git@github.com:TheoreticalEcosystemEcology/STModel-Data.git
 	cd STModel-Data
-	
+
 #### 2. Install R dependencies
 
 	install.packages("RPostgreSQL")
 	install.packages("ggmap")
-	
+
 Note for mac users: this may fail if pg_config is not in your path. If so, you need to
 install psql first. This is easiest with macports:
 
 	sudo port install postgresql93
-	sudo ln -s /opt/local/lib/postgresql93/bin/pg_config /opt/local/bin
+	sudo ln -s /opt/local/lib/postgresql93/bin/:$PATH /opt/local/bin
 	install.packages("RPostgreSQL", type='source')
 
 #### 3. Setup your database account
@@ -62,7 +62,7 @@ Column        | Description
 **longitude** | longitude of the plot (degree decimal)
 **latitude**  | latitude of the plot (degree decimal)
 **srid**      | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
-**drainage**  | *coming soon* 
+**drainage**  | *coming soon*
 **slope**     | *coming soon* (in degree)
 
 ### treeData
@@ -74,7 +74,7 @@ Column | Description
 **id_spe** | Species code, details are available in ./stm_code_species.csv file
 **basal area** | basal area of the species in **m²/ha**
 
-### climData 
+### climData
 
 Column                                      | Description
 ---                                         | ---
@@ -152,6 +152,6 @@ Code           | Species
 183412-LAR-LAR | Tamarack
 195773-POP-TRE | Trembling aspen
 
-### Drainage 
+### Drainage
 
 *coming soon*
