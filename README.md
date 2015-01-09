@@ -17,10 +17,7 @@ Note for mac users: this may fail if pg_config is not in your path. If so, you n
 install psql first. This is easiest with macports:
 
 	sudo port install postgresql93
-	sudo ln -s /opt/local/lib/postgresql93/bin/pg_config /opt/local/bin
-	sudo ln -s /opt/local/lib/postgresql93/bin/pg_restore /opt/local/bin
-	sudo ln -s /opt/local/lib/postgresql93/bin/pg_dump /opt/local/bin
-	sudo ln -s /opt/local/lib/postgresql93/bin/psql /opt/local/bin
+	sudo ln -s /opt/local/lib/postgresql93/bin/* /opt/local/bin
 	install.packages("RPostgreSQL", type='source')
 
 #### 3. Setup your database account
@@ -39,7 +36,32 @@ Your computer must be connected by wire on the UQAR network to connect to the da
 
 #### 4. Get all datasets
 
+##### Localy:
+
 	make -j all
+
+##### Remotely:
+
+If you want to get the data and you are not at UQAR or connected by wired, please follow this procedure:
+
+1. Modify ```con_quicc_db.r``` to:
+
+```
+require("RPostgreSQL")
+
+dbname <- "db_quicc_for"
+dbhost <- "127.0.0.1"
+dbport <- 55432
+```
+
+2. Open the VPN tunnel:
+
+    * Open the web page: https://eduvpn.uqar.ca.
+    * Login with your UQAR account (e.g. viss0001 is my username)
+    * Click on the icon «BD PostgreSQL SRBD04».
+    * The tunnel to the stationEEC is open.
+
+3. Run ```make -j all```
 
 ## Alternatively: Retrieve dataset separately
 
