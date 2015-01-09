@@ -59,7 +59,7 @@ dbport <- 55432
     * Open the web page: https://eduvpn.uqar.ca.
     * Login with your UQAR account (e.g. viss0001 is my username)
     * Click on the icon «BD PostgreSQL SRBD04».
-    * The tunnel to the stationEEC is open.
+    * The tunnel to the QUICCFOR DB is open.
 
 3. Run ```make -j all```
 
