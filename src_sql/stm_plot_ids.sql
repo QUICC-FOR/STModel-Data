@@ -29,9 +29,10 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
 
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_clim CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_clim AS (
-SELECT plot_id, biovar, year_clim, ST_Value(rast,coord_postgis,false) AS val
+SELECT plot_id, biovar,year_measured, avg(val) as mean_val FROM (
+SELECT plot_id, biovar, year_measured, year_clim, ST_Value(rast,coord_postgis,false) AS val
 FROM
-(SELECT DISTINCT plot_id, ST_Transform(coord_postgis,4269) as coord_postgis
+(SELECT plot_id, ST_Transform(coord_postgis,4269) as coord_postgis, year_measured
 FROM rdb_quicc.stm_plots_id) As plot_points,
 (SELECT rast, biovar, year_clim
 	FROM clim_rs.clim_allbiovars
@@ -41,6 +42,7 @@ FROM rdb_quicc.stm_plots_id) As plot_points,
 		'mean_diurnal_range',
 		'tot_annual_pp',
 		'mean_temperature_wettest_quarter')) AS clim_rasters
-WHERE year_clim >=1960
-AND ST_Intersects(rast,coord_postgis)
+WHERE year_clim <= year_measured AND year_clim > year_measured-15
+AND ST_Intersects(rast,coord_postgis)) AS allclim
+GROUP BY plot_id, biovar,year_measured
 );
