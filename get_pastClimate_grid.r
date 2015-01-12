@@ -37,7 +37,7 @@ query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 	(SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars
      WHERE (year_clim >= 1970 AND year_clim <= 2000)
 	AND biovar IN ('annual_mean_temp', 'pp_seasonality', 'pp_warmest_quarter', 'mean_diurnal_range','tot_annual_pp', 'mean_temperature_wettest_quarter')) AS rast_noram,
-    (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plot_ids) AS env_stm
+    (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plot_ids.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plots_id) AS env_stm
 	WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
 	GROUP BY biovar) AS union_query
 ) AS points_query;"
