@@ -27,7 +27,7 @@ SELECT * FROM (
 	AND plot.plot_size IS NOT NULL
 	ORDER BY plot_id) all_plots_id,
 	clim_rs.clim_allbiovars
-	WHERE ST_Intersects(rast,coord_postgis)
+	WHERE ST_Intersects(rast,ST_Transform(coord_postgis,4269))
 );
 
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_clim CASCADE;
