@@ -1,7 +1,7 @@
 # Prepare plots informations data
 # Date: November 15th, 2014
 
-# This script get information on the plots from the QUICC-FOR Database 
+# This script get information on the plots from the QUICC-FOR Database
 # and create a map of the plots distribution across North America.
 ## ---------------------------------------------
 
@@ -14,15 +14,15 @@ source('./con_quicc_db.r')
 # Load librairies
 library("ggmap")
 
-# Query 
+# Query
 query_plotInfoData  <- "
-SELECT 
-	plot_id, 
-	ST_X(coord_postgis) AS lon, 
-	ST_Y(coord_postgis) AS lat, 
+SELECT
+	plot_id,
+	ST_X(coord_postgis) AS lon,
+	ST_Y(coord_postgis) AS lat,
 	srid as srid_projection
 FROM rdb_quicc.localisation
-RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plot_ids) as plt_constraint USING (plot_id)
+RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plots_id) as plt_constraint USING (plot_id)
 ORDER BY plot_id;"
 
 ## Send the query to the database
@@ -47,7 +47,7 @@ plots_map =ggmap(quicc.map, maprange=FALSE,extent = "normal") %+% res_plotInfoDa
 stat_density2d(aes(fill = ..level.., alpha = ..level..), bins = 25, geom = 'polygon',contour=TRUE) +
 geom_density2d(color="orange4",size=.2) +
 scale_fill_gradient(low = "orange", high = "orange4") +
-scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+ 
+scale_x_continuous(expand=c(0,0)) + scale_y_continuous(expand=c(0,0))+
 xlab("Longitude") + ylab("Latitude") +
 theme(legend.position = "none", text = element_text(size = 10))
 
