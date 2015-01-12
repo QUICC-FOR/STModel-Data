@@ -13,6 +13,7 @@
 
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_id CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
+SELECT * FROM (
 	SELECT DISTINCT
 		plot.plot_id,
 		plot.year_measured,
@@ -24,7 +25,9 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
 	WHERE plot.is_temp = False
 	AND localisation.longitude >= -97.0
 	AND plot.plot_size IS NOT NULL
-	ORDER BY plot_id
+	ORDER BY plot_id) all_plots_id,
+	clim_rs.clim_allbiovars
+	WHERE ST_Intersects(rast,coord_postgis)
 );
 
 DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_clim CASCADE;
