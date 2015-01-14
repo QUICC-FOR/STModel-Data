@@ -66,7 +66,7 @@ SELECT plot_id, year_measured, id_spe, surf_spe_m2*10000/plot_size as basal_area
 			SELECT tree.plot_id, tree.year_measured,tree.tree_id,tree.id_spe,
 			 (((tree.dbh)/2)^2*pi()) as surf_mm2, plot.plot_size
 			FROM rdb_quicc.tree
-			RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plots_clim WHERE mean_val IS NOT NULL) as plt_clim_constraint USING (plot_id)
+			RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plots_clim WHERE val IS NOT NULL) as plt_clim_constraint USING (plot_id)
 			LEFT JOIN rdb_quicc.plot USING (plot_id,year_measured)
 			WHERE dbh > 127 AND plot_size IS NOT NULL AND dbh IS NOT NULL
 			AND id_spe NOT IN ('18032-ABI-BAL','18034-PIC-RUB','19408-QUE-RUB',
