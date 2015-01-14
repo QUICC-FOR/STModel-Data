@@ -35,12 +35,42 @@ FROM
 FROM rdb_quicc.stm_plots_id) As plot_points,
 (SELECT rast, biovar, year_clim
 	FROM clim_rs.clim_allbiovars
-	WHERE biovar IN ('annual_mean_temp',
-		'pp_seasonality',
-		'pp_warmest_quarter',
-		'mean_diurnal_range',
-		'tot_annual_pp',
-		'mean_temperature_wettest_quarter')) AS clim_rasters
+	WHERE biovar IN (
+	'temp_seasonality',
+	'mean_temp_wettest_quarter',
+	'mean_temp_driest_quarter',
+	'max_temp_warmest_period',
+	'gdd_above_base_temp_period2',
+	'pp_driest_quarter',
+	'pp_wettest_period',
+	'mean_temp_period_3',
+	'tot_annual_pp',
+	'jd_number_grow_season',
+	'jd_number_start_grow_season',
+	'tot_pp_period4',
+	'gdd_above_base_temp_period4',
+	'tot_pp_period2',
+	'isothermality',
+	'mean_temp_warmest_quarter',
+	'mean_temp_coldest_quarter',
+	'pp_warmest_quarter',
+	'annual_minimum_temp',
+	'temp_range_period_3',
+	'tot_pp_period3',
+	'mean_diurnal_range',
+	'pp_coldest_quarter',
+	'pp_seasonality',
+	'tot_pp_period1',
+	'min_temp_coldest_period',
+	'gdd_above_base_temp_period3',
+	'annual_maximum_temp',
+	'temp_annual_range',
+	'jd_number_end_grow_season',
+	'pp_wettest_quarter',
+	'gdd_above_base_temp_period1',
+	'pp_driest_period',
+	'annual_mean_temp'
+		)) AS clim_rasters
 WHERE year_clim <= year_measured AND year_clim > year_measured-15
 AND ST_Intersects(rast,coord_postgis)
 );
