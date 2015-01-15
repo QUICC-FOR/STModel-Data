@@ -10,6 +10,7 @@ R_CMD = Rscript
 # some convenience targets:
 # all: treeData climData plotInfoData pastClimate_grid plotMap transitions states
 all: treeData climData plotInfoData plotMap transitions states
+speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
@@ -26,6 +27,9 @@ clean: cleanR
 cleanR:
 	rm -f *.Rout .RData
 
+out_files/speciesCode.csv: get_speciesCode.r con_quicc_db.r
+	$(R_CMD) get_speciesCode.r
+	@echo "Query success and treeData.csv transferred into out_files folder"
 
 out_files/treeData.csv: get_treeData.r con_quicc_db.r
 	$(R_CMD) get_treeData.r
@@ -42,7 +46,7 @@ out_files/plotInfoData.csv: get_plotInfoData.r con_quicc_db.r
 out_files/pastClimate_grid.csv: get_pastClimate_grid.r con_quicc_db.r
 	$(R_CMD) get_pastClimate_grid.r
 	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
-	
+
 out_files/transitionsFourState.csv: reshape/QCtransition.py \
 reshape/build_four_state_dataset.py out_files/treeData.csv out_files/climData.csv \
 out_files/plotInfoData.csv
