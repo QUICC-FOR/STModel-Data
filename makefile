@@ -9,7 +9,7 @@ R_CMD = Rscript
 
 # some convenience targets:
 # all: treeData climData plotInfoData pastClimate_grid plotMap transitions states
-all: treeData climData plotInfoData plotMap transitions states
+all: speciesCode treeData climData plotInfoData plotMap transitions states
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
