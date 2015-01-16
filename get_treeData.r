@@ -83,18 +83,8 @@ ORDER BY plot_id, year_measured, id_spe;
 ## Send the query to the database
 treeData <- dbGetQuery(con, query_treeData)
 ## Time: Approx. 3 minutes
-# Writing final trees dataset
-## ---------------------------------------------
-write.table(treeData, file="out_files/treeData.csv", sep=',', row.names=FALSE)
 
-"
-
-## Send the query to the database
-treeData <- dbGetQuery(con, query_treeData)
-## Time: Approx. 3 minutes
 
 # Writing final trees dataset
 ## ---------------------------------------------
-
 write.table(treeData, file="out_files/treeData.csv", sep=',', row.names=FALSE)
-
