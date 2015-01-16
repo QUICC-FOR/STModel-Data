@@ -29,7 +29,7 @@ cleanR:
 
 out_files/speciesCode.csv: get_speciesCode.r con_quicc_db.r
 	$(R_CMD) get_speciesCode.r
-	@echo "Query success and treeData.csv transferred into out_files folder"
+	@echo "Query success and speciesCode.csv transferred into out_files folder"
 
 out_files/treeData.csv: get_treeData.r con_quicc_db.r
 	$(R_CMD) get_treeData.r
