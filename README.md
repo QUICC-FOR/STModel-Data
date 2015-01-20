@@ -10,31 +10,16 @@ STModel-Data
 
 #### 2. Install R dependencies
 
-	install.packages("RPostgreSQL")
-	install.packages("ggmap")
+    Rscript install_dependencies.r
 
 Note for mac users: this may fail if pg_config is not in your path. If so, you need to
 install psql first. This is easiest with macports:
 
-	sudo port install postgresql93
-	sudo ln -s /opt/local/lib/postgresql93/bin/* /opt/local/bin
-	install.packages("RPostgreSQL", type='source')
+    sudo port install postgresql93
+    sudo ln -s /opt/local/lib/postgresql93/bin/* /opt/local/bin
+    Rscript install_dependencies.r
 
-#### 3. Setup your database account
-
-Create a new file named ```credentials.r```.
-This file will store your database login. It is local only, and will not be tracked by git.
-This file should have two lines:
-
-```
-dbuser <- 'myUserName'
-dbpass <- 'myPassword'
-```
-
-Replace ```myUserName``` and  ```myPassword``` with your username and password.
-Your computer must be connected by wire on the UQAR network to connect to the database.
-
-#### 4. Get all datasets
+#### 3. Get all datasets
 
 ##### Localy:
 
@@ -78,6 +63,45 @@ dbport <- 55432
 ![Plots_distribution](./out_files/plots_map.png)
 
 ## Metadata
+
+### Reshaping script
+
+The reshape script comes in two parts, the first, `reshape/reshapeStates.r` computes the
+states, and the second, `reshape/reshapeTransitions.r` computes transitions between
+states. In general, use the makefile, either with `make -j all` or `make -j reshape` to
+run the scripts (which will use default options). The most important option, setting the
+threshold basal area for the R state, can be changed by editing the variable at the
+beginning of the makefile. To see other options and change them, run the scripts using
+Rscript. Start with:
+
+    Rscript reshape/reshapeStates.r --help
+    Rscript reshape/reshapeTransitions.r --help
+
+to get information on the options. There is an additional script, 
+`reshape/reshapeClimTest.r`, that does some testing. See its help for more information.
+Finally, note that the file `reshape/tmpStateData_r$N.rdata`, where `$N` is the cutoff
+for the R state, is a temporary file that should not be used. The correct output file,
+assuming default options, is `out_files/transitions_r$N.rdata`.
+
+Defaults:
+
+* threshold basal area for determining the R state: 1 (change in makefile or with -r option)
+* climate variables for transitions: annual mean temperature, annual precipitation
+* output file: transitions_r1.rdata, where the number will be the r threshold
+	
+
+A rough outline of what the script does:
+
+* Read coarse data from the treeData.csv, plotInfoData.csv, and climData.csv files produced by the sql queries.
+* Collapse the tree data into a single state for each year sampled in each plot, using species lists specified in the script.
+* Merge the collapsed data with the plotInfoData (to get lat/long)
+* Merge this with the climate data into stateData. This is a dataframe with one row for each unique plot-year combination. This will output warnings if there are  missing records in the climate or state data; do not ignore these warnings!
+* Output some basic summary statistics on the states
+* reshapes the sample data into a transition data frame, containing columns for the measurement years, the states, and the mean of the 2 climate variables
+* drop all rows from both the transition and state objects containing a U state
+* scale the climate variables in the transition data frame
+* print the transition table to the console
+* save the state and the transition objects, and the transformation for the climate variables, into a single .rdata file
 
 ### plotInfoData
 
