@@ -10,11 +10,15 @@ dbhost <- "srbd04.uqar.ca"
 dbport <- 5432
 
 # use when off campus
-# dbname <- "db_quicc_for"
-# dbhost <- "127.0.0.1"
-# dbport <- 55432
+vpn = Sys.getenv("QC_VPN")
+if(vpn == "Y" || vpn == "y") {
+	dbname <- "db_quicc_for"
+	dbhost <- "127.0.0.1"
+	dbport <- 55432
+}
 
 drv <- dbDriver("PostgreSQL")
-source("credentials.r")
+dbuser = Sys.getenv("QC_USERNAME")
+dbpass = Sys.getenv("QC_PASSWORD")
 con <- dbConnect(drv, host=dbhost, port=dbport, dbname=dbname,
                  user=dbuser, password=dbpass)
