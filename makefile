@@ -5,7 +5,9 @@
 R_STATE = 1
 
 R_CMD = Rscript
-
+export QC_VPN := $(shell bash -c 'read -p "Use VPN (Y/[N]): " vpn; vpn=$${vpn:-N}; echo $$vpn')
+export QC_USERNAME := $(shell bash -c 'read -p "Enter your database username: " pwd; echo $$pwd')
+export QC_PASSWORD := $(shell bash -c 'read -s -p "Enter your database password: " pwd; echo $$pwd')
 
 # some convenience targets:
 # disabled because pastClimate_grid not working
@@ -59,4 +61,3 @@ reshape/reshapeTransitions.r
 
 out_files/plots_map.png: out_files/plotInfoData.csv
 
-con_quicc_db.r: credentials.r

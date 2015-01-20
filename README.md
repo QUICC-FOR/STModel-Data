@@ -19,21 +19,7 @@ install psql first. This is easiest with macports:
     sudo ln -s /opt/local/lib/postgresql93/bin/* /opt/local/bin
     Rscript install_dependencies.r
 
-#### 3. Setup your database account
-
-Create a new file named ```credentials.r```.
-This file will store your database login. It is local only, and will not be tracked by git.
-This file should have two lines:
-
-```
-dbuser <- 'myUserName'
-dbpass <- 'myPassword'
-```
-
-Replace ```myUserName``` and  ```myPassword``` with your username and password.
-Your computer must be connected by wire on the UQAR network to connect to the database.
-
-#### 4. Get all datasets
+#### 3. Get all datasets
 
 ##### Localy:
 
