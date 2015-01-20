@@ -1,23 +1,23 @@
 # Makefile to retrieve & reshape data from the QUICC-FOR database
-# November 21, 2014
+# Jan 20, 2015
 
-PY_EXE = /usr/bin/python
+# set the threshold basal area value for the R state
+R_STATE = 1
+
 R_CMD = Rscript
-# use the below if you are old-fashioned or if Rscript doesn't work for some reason
-# R_CMD = R CMD BATCH
 
 
 # some convenience targets:
-# all: treeData climData plotInfoData pastClimate_grid plotMap transitions states
-all: speciesCode treeData climData plotInfoData plotMap transitions states
+# disabled because pastClimate_grid not working
+# all: treeData climData plotInfoData pastClimate_grid plotMap reshape
+all: speciesCode treeData climData plotInfoData plotMap reshape
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
 pastClimate_grid: out_files/pastClimate_grid.csv
 plotMap: out_files/plots_map.png
-transitions: out_files/transitionsFourState.csv
-states: out_files/statesFourState.csv
+reshape: out_files/transitions_r$(R_STATE).rdata
 
 # remove all data files and R junk
 clean: cleanR
@@ -47,12 +47,15 @@ out_files/pastClimate_grid.csv: get_pastClimate_grid.r con_quicc_db.r
 	$(R_CMD) get_pastClimate_grid.r
 	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
 
-out_files/transitionsFourState.csv: reshape/QCtransition.py \
-reshape/build_four_state_dataset.py out_files/treeData.csv out_files/climData.csv \
-out_files/plotInfoData.csv
-	$(PY_EXE) reshape/build_four_state_dataset.py
+reshape/tmpStateData_r$(R_STATE).rdata: reshape/reshapeStates.r out_files/treeData.csv \
+out_files/climData.csv out_files/plotInfoData.csv
+	$(R_CMD) reshape/reshapeStates.r -r $(R_STATE) -t out_files/treeData.csv \
+	-c out_files/climData.csv -p out_files/plotInfoData.csv
 
-out_files/statesFourState.csv: out_files/transitionsFourState.csv
+out_files/transitions_r$(R_STATE).rdata: reshape/tmpStateData_r$(R_STATE).rdata \
+reshape/reshapeTransitions.r
+	$(R_CMD) reshape/reshapeTransitions.r -i reshape/tmpStateData_r$(R_STATE).rdata \
+	-o out_files/transitions_r$(R_STATE).rdata
 
 out_files/plots_map.png: out_files/plotInfoData.csv
 
