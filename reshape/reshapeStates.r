@@ -26,7 +26,16 @@ treeDat = merge(treeDat, plotDat, all.x=TRUE)
 treeDat$type = rep('U', nrow(treeDat))
 treeDat$type[which(treeDat$id_spe %in% tSpecies)] = 'T'
 treeDat$type[which(treeDat$id_spe %in% bSpecies)] = 'B'
-sampleDat = dcast(treeDat, plot_id + year_measured + lat + lon ~ type, fill = 0, 
+
+# get rid of all plots that NEVER have at least one T or B species
+# this prevents them from being classified as R when they never contain even one
+# species of interest
+trTab = table(treeDat$plot_id, treeDat$type)
+filterNames = as.numeric(rownames(trTab[rowSums(tdTab[,1:2]) == 0,]))
+treeDat.filtered = treeDat[!(treeDat$plot_id %in% filterNames),]
+
+# reshape the data into plot-year samples by state
+sampleDat = dcast(treeDat.filtered, plot_id + year_measured + lat + lon ~ type, fill = 0, 
 		value.var = "basal_area", fun.aggregate = sum)
 sampleDat$sumBA = sampleDat$B + sampleDat$T + sampleDat$U
 sampleDat$state = rep('U', nrow(sampleDat))
