@@ -31,7 +31,7 @@ treeDat$type[which(treeDat$id_spe %in% bSpecies)] = 'B'
 # this prevents them from being classified as R when they never contain even one
 # species of interest
 trTab = table(treeDat$plot_id, treeDat$type)
-filterNames = as.numeric(rownames(trTab[rowSums(tdTab[,1:2]) == 0,]))
+filterNames = as.numeric(rownames(trTab[rowSums(trTab[,1:2]) == 0,]))
 treeDat.filtered = treeDat[!(treeDat$plot_id %in% filterNames),]
 
 # reshape the data into plot-year samples by state
