@@ -11,8 +11,7 @@ export QC_PASSWORD := $(shell bash -c 'read -s -p "Enter your database password:
 
 # some convenience targets:
 # disabled because pastClimate_grid not working
-# all: treeData climData plotInfoData pastClimate_grid plotMap reshape
-all: speciesCode treeData climData plotInfoData plotMap reshape
+all: treeData climData plotInfoData pastClimate_grid plotMap reshape
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
