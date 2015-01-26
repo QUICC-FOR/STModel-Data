@@ -65,11 +65,19 @@ climData_reshape = climData
 
 ## Reshape
 climData_reshape$biovar <- as.factor(climData_reshape$biovar)
+climData_reshape[climData_reshape$mean_val == -9999.0,"mean_val"] <- NA
 climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="mean_val")
 
 ## NOTE: For bio grids the values of temperature must be divided by 10, and the values of Temperature Seasonality (C of V) must be divided by 100
 climData_reshape$mean_diurnal_range <- climData_reshape$mean_diurnal_range/10
-climData_reshape$annual_mean_temp <- climData_reshape$annual_mean_temp/10
+climData_reshape$max_temp_warmest_period <- climData_reshape$max_temp_warmest_period/10
+climData_reshape$mean_temp_coldest_quarter <- climData_reshape$mean_temp_coldest_quarter/10
+climData_reshape$mean_temp_driest_quarter <- climData_reshape$mean_temp_driest_quarter/10
+climData_reshape$mean_temp_warmest_quarter <- climData_reshape$mean_temp_warmest_quarter/10
+climData_reshape$mean_temp_wettest_quarter <- climData_reshape$mean_temp_wettest_quarter/10
+climData_reshape$min_temp_coldest_period <- climData_reshape$min_temp_coldest_period/10
+climData_reshape$temp_annual_range <- climData_reshape$temp_annual_range/10
+climData_reshape$temp_seasonality <- climData_reshape$temp_seasonality/100
 
 # Writing final trees dataset
 ## ---------------------------------------------

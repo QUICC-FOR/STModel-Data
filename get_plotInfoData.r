@@ -22,7 +22,7 @@ SELECT
 	ST_Y(coord_postgis) AS lat,
 	srid as srid_projection
 FROM rdb_quicc.localisation
-RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plots_id) as plt_clim_constraint USING (plot_id)
+RIGHT JOIN (SELECT DISTINCT plot_id FROM rdb_quicc.stm_plots_clim) as plt_clim_constraint USING (plot_id)
 ORDER BY plot_id;"
 
 ## Send the query to the database
