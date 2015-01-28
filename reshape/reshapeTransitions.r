@@ -6,14 +6,11 @@ require(reshape2)
 require(argparse)
 # handle command line arguments
 parser = ArgumentParser()
-parser$add_argument("-i", "--infile", default="tmpStateData.rdata", help="input file name")
+parser$add_argument("-i", "--infile", default="reshape/tmpStateData_r1.rdata", help="input file name")
 parser$add_argument("-o", "--outfile", default="out_data/transitions.rdata", help="output file name")
 trArgList = parser$parse_args()
 load(trArgList$infile)
 
-# define the column names from the course data to be used in the transition dataset
-# these will be (in order) ENV1 and ENV2 in the model
-transitionClimateVariables = c("annual_mean_temp", "tot_annual_pp")
 
 # remove plots with only one sample
 freqs = table(stateData$plot_id)
@@ -23,8 +20,10 @@ transSamples = stateData[dfselect,]
 
 # reshape
 transSamples.wide = list()
-vars = c("state", transitionClimateVariables)
-for(v in vars)
+dropNames = c('plot_id', 'year_measured', 'B', 'T', 'U', 'sumBA', 'state')
+selectOut = which(colnames(transSamples) %in% dropNames)
+transitionClimateVariables = colnames(transSamples)[-selectOut]
+for(v in c('state', transitionClimateVariables))
 	transSamples.wide[[v]] = dcast(transSamples, plot_id ~ year_measured, value.var = v)
 
 transitionData = data.frame(plot = numeric(), year1 = numeric(), year2 = numeric(),
@@ -68,12 +67,9 @@ for(i in 2:ncol(transSamples.wide$state)) {
 stateData = stateData[stateData$state != 'U',]
 transitionData = transitionData[transitionData$state1 != 'U' & 
 		transitionData$state2 != 'U',]
-		
-# scale the climate variables (for transition data only)
-transitionClimateTransformation = list()
-for(env in transitionClimateVariables) {
-	transitionData[,paste(env, "_sc", sep="")] = scale(transitionData[,env])
-}
+transitionData$state1 = factor(transitionData$state1)
+transitionData$state2 = factor(transitionData$state2)
+
 
 print(table(transitionData$state1, transitionData$state2))
 
