@@ -18,3 +18,4 @@ reshape/*.rdata
 
 #Personal config
 con_quicc_db_local.r
+explo_crs_data.r
