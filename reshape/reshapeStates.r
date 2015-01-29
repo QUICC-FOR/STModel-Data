@@ -6,7 +6,7 @@ require(reshape2)
 require(argparse)
 # handle command line arguments
 parser = ArgumentParser()
-parser$add_argument("-r", "--rstate", default=1, help="cutoff for r state")
+parser$add_argument("-r", "--rstate", default=1, type="double", help="cutoff for r state")
 parser$add_argument("-c", "--climate", default="out_files/climData.csv", help="climate data file location")
 parser$add_argument("-t", "--tree", default="out_files/treeData.csv", help="tree data file location")
 parser$add_argument("-p", "--plot", default="out_files/plotInfoData.csv", help="plot data file location")
@@ -18,7 +18,7 @@ tSpecies = c('19481-BET-ALL','19408-QUE-RUB','28728-ACE-RUB','28731-ACE-SAC',
 bSpecies = c('183302-PIC-MAR','183295-PIC-GLA','18034-PIC-RUB','183412-LAR-LAR',
   '183319-PIN-BAN','18032-ABI-BAL')
 
-# read the data - this is the slow step
+# read the data
 treeDat = read.csv(argList$tree)
 plotDat = read.csv(argList$plot)
 climDat = read.csv(argList$climate)
@@ -43,6 +43,8 @@ sampleDat$state[sampleDat$B > 0 & sampleDat$T == 0] = 'B'
 sampleDat$state[sampleDat$B == 0 & sampleDat$T > 0] = 'T'
 sampleDat$state[sampleDat$B > 0 & sampleDat$T > 0] = 'M'
 sampleDat$state[sampleDat$sumBA < argList$rstate] = 'R'
+
+
 stateData = merge(sampleDat, climDat, all = 'T', by=c("plot_id", "year_measured"))
 if(sum(is.na(stateData$lat)) > 0) {
 	warning(paste(sum(is.na(stateData$lat)), " plot-year climate records ", 
