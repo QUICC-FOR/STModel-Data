@@ -2,7 +2,7 @@
 # Jan 20, 2015
 
 # set the threshold basal area value for the R state
-R_STATE = 5
+R_STATE = 1
 
 R_CMD = Rscript
 export QC_VPN := $(shell bash -c 'read -p "Use VPN (Y/[N]): " vpn; vpn=$${vpn:-N}; echo $$vpn')
