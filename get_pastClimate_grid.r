@@ -1,23 +1,12 @@
-# Prepare past climate grid input
+# Prepare past climate grid; input for the STM model
 # Date: November 13th, 2014
 
-# This script prepare grid of the past climate for the province of Quebec.
+# This script prepare grid of the past climate for the study area.
 ## ---------------------------------------------
-# First step: The North america past climate grid is clipped with the spatial polygon of Quebec.
+# First step: The North america past climate grid is clipped with a convexHull of the location plots.
 # Second step: The average of the climatic variables are compute on the clipped raster and the period of time expected
 
-
-## Query parameters
-## ---------------------------------------------
-
-# 6 climatic variables available for USA/CAN (1930-2010):
-# - 'annual_mean_temp' (WARNING: Need to be divided by 10 to get decimal)
-# - 'min_temp_coldest_mont'
-# - 'mean_temp_warmest_quarter'
-# - 'mean_temp_coldest_quarter'
-# - 'annual_pp'
-# - 'pp_seasonality'
-
+# Only two climatic variables 'annual_mean_temp' and 'tot_annual_pp'
 
 ## Get grid from quicc-for database
 ## ---------------------------------------------
