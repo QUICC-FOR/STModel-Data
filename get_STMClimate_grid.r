@@ -59,7 +59,7 @@ conv_func <-function(x,conv){
 	return(res)
 }
 
-STMClimate_grid$annual_pp <- conv_func(STMClimate_grid$tot_annual_pp,1000)
+STMClimate_grid$tot_annual_pp <- conv_func(STMClimate_grid$tot_annual_pp,1000)
 
 ## Add year columns and rename all dataset columns
 names(STMClimate_grid)[3:ncol(STMClimate_grid)] <- paste("env",seq(1,ncol(STMClimate_grid)-2,1),sep="")
