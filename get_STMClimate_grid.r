@@ -38,7 +38,7 @@ res_STMClimate_grid <- dbGetQuery(con, query_STMClimate_grid)
 # Reshaping and writing grid dataset
 ## ---------------------------------------------
 
-res_STMClimate_grid = STMClimate_grid
+STMClimate_grid = res_STMClimate_grid
 
 ## Reshape
 STMClimate_grid$biovar <- as.factor(STMClimate_grid$biovar)
