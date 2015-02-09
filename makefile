@@ -10,13 +10,13 @@ export QC_USERNAME := $(shell bash -c 'read -p "Enter your database username: " 
 export QC_PASSWORD := $(shell bash -c 'read -s -p "Enter your database password: " pwd; echo $$pwd')
 
 # some convenience targets:
-# disabled because pastClimate_grid not working
-all: treeData climData plotInfoData pastClimate_grid plotMap reshape
+# disabled because STMClimate_grid not working
+all: treeData climData plotInfoData STMClimate_grid plotMap reshape
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
-pastClimate_grid: out_files/pastClimate_grid.csv
+STMClimate_grid: out_files/STMClimate_grid.csv
 plotMap: out_files/plots_map.png
 reshape: out_files/transitions_r$(R_STATE).rdata
 
@@ -44,9 +44,13 @@ out_files/plotInfoData.csv: get_plotInfoData.r con_quicc_db.r
 	$(R_CMD) get_plotInfoData.r
 	@echo "Query success and plotInfo.csv transferred into out_files folder"
 
-out_files/pastClimate_grid.csv: get_pastClimate_grid.r con_quicc_db.r
-	$(R_CMD) get_pastClimate_grid.r
-	@echo "Query success and pastClimate_grid.csv transferred into out_files folder"
+out_files/STMClimate_grid.csv: get_STMClimate_grid.r con_quicc_db.r
+	$(R_CMD) get_STMClimate_grid.r
+	@echo "Query success and STMClimate_grid.csv transferred into out_files folder"
+
+out_files/SDMClimate_grid.csv: get_SDMClimate_grid.r con_quicc_db.r
+	$(R_CMD) get_SDMClimate_grid.r
+	@echo "Query success and SDMClimate_grid.csv transferred into out_files folder"
 
 reshape/tmpStateData_r$(R_STATE).rdata: reshape/reshapeStates.r out_files/treeData.csv \
 out_files/climData.csv out_files/plotInfoData.csv
