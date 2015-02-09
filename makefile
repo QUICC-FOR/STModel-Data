@@ -9,14 +9,14 @@ export QC_VPN := $(shell bash -c 'read -p "Use VPN (Y/[N]): " vpn; vpn=$${vpn:-N
 export QC_USERNAME := $(shell bash -c 'read -p "Enter your database username: " pwd; echo $$pwd')
 export QC_PASSWORD := $(shell bash -c 'read -s -p "Enter your database password: " pwd; echo $$pwd')
 
-# some convenience targets:
-# disabled because STMClimate_grid not working
-all: treeData climData plotInfoData STMClimate_grid plotMap reshape
+
+all: treeData climData plotInfoData STMClimate_grid SDMClimate_grid plotMap reshape
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
+SDMClimate_grid: out_files/SDMClimate_grid.csv
 plotMap: out_files/plots_map.png
 reshape: out_files/transitions_r$(R_STATE).rdata
 
