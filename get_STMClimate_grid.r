@@ -19,7 +19,7 @@ source('./con_quicc_db.r')
 require('reshape2')
 
 # Query
-query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
+query_STMClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 	SELECT biovar, (ST_PixelAsCentroids(rasters, 1, false)).* FROM (
 	SELECT biovar, ST_Union(ST_Clip(rast,env_stm.env_plots),'MEAN') as rasters
 	FROM
@@ -32,17 +32,17 @@ query_pastClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 ) AS points_query;"
 
 ## Send the query to the database
-res_pastClimate_grid <- dbGetQuery(con, query_pastClimate_grid)
+res_STMClimate_grid <- dbGetQuery(con, query_STMClimate_grid)
 ## Time: Approx. 5-15 minutes
 
 # Reshaping and writing grid dataset
 ## ---------------------------------------------
 
-pastClimate_grid = res_pastClimate_grid
+res_STMClimate_grid = STMClimate_grid
 
 ## Reshape
-pastClimate_grid$biovar <- as.factor(pastClimate_grid$biovar)
-pastClimate_grid <- dcast(pastClimate_grid,x+y ~ biovar, value.var="val")
+STMClimate_grid$biovar <- as.factor(STMClimate_grid$biovar)
+STMClimate_grid <- dcast(STMClimate_grid,x+y ~ biovar, value.var="val")
 
 ## Convert unit:
 # - Get decimal for annual_mean_temp (divided by 10)
@@ -59,13 +59,13 @@ conv_func <-function(x,conv){
 	return(res)
 }
 
-pastClimate_grid$annual_pp <- conv_func(pastClimate_grid$tot_annual_pp,1000)
+STMClimate_grid$annual_pp <- conv_func(STMClimate_grid$tot_annual_pp,1000)
 
 ## Add year columns and rename all dataset columns
-names(pastClimate_grid)[3:ncol(pastClimate_grid)] <- paste("env",seq(1,ncol(pastClimate_grid)-2,1),sep="")
-pastClimate_grid$year <- rep(0, nrow(pastClimate_grid))
-pastClimate_grid <- pastClimate_grid[, c(1,2,ncol(pastClimate_grid),4:ncol(pastClimate_grid)-1)]
+names(STMClimate_grid)[3:ncol(STMClimate_grid)] <- paste("env",seq(1,ncol(STMClimate_grid)-2,1),sep="")
+STMClimate_grid$year <- rep(0, nrow(STMClimate_grid))
+STMClimate_grid <- STMClimate_grid[, c(1,2,ncol(STMClimate_grid),4:ncol(STMClimate_grid)-1)]
 
 ## Write
-write.table(pastClimate_grid, file="out_files/pastClimate_grid.csv", sep=',', row.names=FALSE)
+write.table(STMClimate_grid, file="out_files/STMClimate_grid.csv", sep=',', row.names=FALSE)
 
