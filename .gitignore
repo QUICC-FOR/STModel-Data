@@ -11,6 +11,7 @@ ggmapTemp.png
 ## Data
 out_files/*
 !out_files/shapefiles/
+out_files/shapefiles/*
 !out_files/plots_map.png
 reshape/*.rdata
 

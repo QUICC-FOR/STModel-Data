@@ -54,6 +54,7 @@ out_files/SDMClimate_grid.csv: get_SDMClimate_grid.r con_quicc_db.r
 	@echo "Query success and SDMClimate_grid.csv transferred into out_files folder"
 
 out_files/shp_stm_area.robj: get_studyAreaShapeFiles.r con_quicc_db.r
+	mkdir -p out_files/shapefiles/
 	$(R_CMD) get_studyAreaShapeFiles.r
 	@echo "Shapefiles successfully writed in the out_files folder"
 
