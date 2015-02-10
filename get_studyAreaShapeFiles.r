@@ -26,4 +26,4 @@ df.lakes <- fortify(lakes)
 df.countries <- fortify(countries)
 
 #Save ggplot2 format as an R object
-save(df.lakes,df.countries,file="./out_files/shp_stm_area.robj")
+save(df.lakes,df.countries,file="./out_files/shp_stm_area.rObj")
