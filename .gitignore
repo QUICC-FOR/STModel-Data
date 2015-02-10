@@ -9,8 +9,8 @@ ggmapTemp.png
 .Rapp.history
 
 ## Data
-out_files/shapefiles/*
 out_files/*
+!out_files/shapefiles
 !out_files/plots_map.png
 reshape/*.rdata
 
