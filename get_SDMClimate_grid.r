@@ -41,11 +41,12 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
     -------------------------------
 
     'annual_mean_temp',
-    'pp_seasonality',
-    'pp_warmest_quarter',
-    'mean_diurnal_range',
     'tot_annual_pp',
-    'mean_temp_wettest_quarter'
+    'mean_diurnal_range',
+    'pp_warmest_quarter',
+    'pp_wettest_period',
+    'mean_temp_wettest_quarter',
+    'mean_temp_driest_quarter'
 
     )) AS rast_noram,
     (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plots_id.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plots_id) AS env_stm,
@@ -73,6 +74,7 @@ SDMClimate_grid <- SDMClimate_grid[!is.na(SDMClimate_grid[,c(3:ncol(SDMClimate_g
 #Conversion unit
 SDMClimate_grid$mean_diurnal_range <- SDMClimate_grid$mean_diurnal_range/10
 SDMClimate_grid$mean_temp_wettest_quarter <- SDMClimate_grid$mean_temp_wettest_quarter/10
+SDMClimate_grid$mean_temp_driest_quarter <- SDMClimate_grid$mean_temp_driest_quarter/10
 
 ## Write
 write.table(SDMClimate_grid, file="out_files/SDMClimate_grid.csv", sep=',', row.names=FALSE)
