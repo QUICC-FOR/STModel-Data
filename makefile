@@ -20,6 +20,8 @@ SDMClimate_grid: out_files/SDMClimate_grid.csv
 SHP_area: out_files/shp_stm_area.robj
 plotMap: out_files/plots_map.png
 reshape: out_files/transitions_r$(R_STATE).rdata
+twostate: out_files/transitions_twostate_18032-ABI-BAL.rdata \
+out_files/transition_twostate_28731-ACE-SAC.rdata
 
 # remove all data files and R junk
 clean: cleanR
@@ -70,3 +72,15 @@ reshape/reshapeTransitions.r
 
 out_files/plots_map.png: out_files/plotInfoData.csv
 
+# two state model
+out_files/transitions_twostate_18032-ABI-BAL.rdata: reshape/reshapeTransitions_2state.r \
+reshape/tmpStateData_twoState.rdata
+	$(R_CMD) reshape/reshapeTransitions_2state.r -s "18032-ABI-BAL"
+
+out_files/transition_twostate_28731-ACE-SAC.rdata: reshape/reshapeTransitions_2state.r \
+reshape/tmpStateData_twoState.rdata
+	$(R_CMD) reshape/reshapeTransitions_2state.r -s "28731-ACE-SAC"
+
+reshape/tmpStateData_twoState.rdata: reshape/reshapeStates_2state.r out_files/treeData.csv \
+out_files/climData.csv out_files/plotInfoData.csv
+	$(R_CMD) reshape/reshapeStates_2state.r
