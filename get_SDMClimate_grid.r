@@ -7,17 +7,6 @@
 # Second step: The average of the climatic variables are compute on the clipped raster and the range of time expected
 
 
-## Variable selected for the SDM (see 0-SDM_explo_vars in STModel-Calibration model)
-## ---------------------------------------------
-
-# 6 climatic variables selected to build the SDM
-# - 'annual_mean_temp' (WARNING: Need to be divided by 10 to get decimal)
-# - 'min_temp_coldest_mont'
-# - 'mean_temp_warmest_quarter'
-# - 'mean_temp_coldest_quarter'
-# - 'annual_pp'
-# - 'pp_seasonality'
-
 ## Get grid from quicc-for database
 ## ---------------------------------------------
 
@@ -61,6 +50,13 @@ SDMClimate_grid <- SDMClimate_grid[!is.na(SDMClimate_grid[,c(3:ncol(SDMClimate_g
 SDMClimate_grid$mean_diurnal_range <- SDMClimate_grid$mean_diurnal_range/10
 SDMClimate_grid$mean_temp_wettest_quarter <- SDMClimate_grid$mean_temp_wettest_quarter/10
 SDMClimate_grid$mean_temp_driest_quarter <- SDMClimate_grid$mean_temp_driest_quarter/10
+SDMClimate_grid$mean_temp_coldest_quarter <- SDMClimate_grid$mean_temp_coldest_quarter/10
+SDMClimate_grid$min_temp_coldest_period <- SDMClimate_grid$min_temp_coldest_period/10
+SDMClimate_grid$max_temp_warmest_period <- SDMClimate_grid$max_temp_warmest_period/10
+SDMClimate_grid$mean_temp_warmest_quarter <- SDMClimate_grid$mean_temp_warmest_quarter/10
+SDMClimate_grid$temp_annual_range <- SDMClimate_grid$temp_annual_range/10
+
+SDMClimate_grid$temp_seasonality <- SDMClimate_grid$temp_seasonality/100
 
 ## Write
 write.table(SDMClimate_grid, file="out_files/SDMClimate_grid.csv", sep=',', row.names=FALSE)
