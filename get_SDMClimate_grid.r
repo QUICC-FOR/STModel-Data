@@ -30,7 +30,7 @@ require('reshape2')
 
 # Query
 query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, biovar FROM (
-    SELECT biovar, (ST_PixelAsCentroids(ST_Transform(rasters,4326))).* FROM (
+    SELECT biovar, (ST_PixelAsCentroids(rasters)).* FROM (
     SELECT biovar, ST_Union(ST_Clip(ST_Resample(rast,ref_rast),env_stm.env_plots),'MEAN') as rasters
     FROM
     (SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars

@@ -16,7 +16,7 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
 	SELECT DISTINCT
 		plot.plot_id,
 		plot.year_measured,
-		localisation.coord_postgis
+		ST_Transform(localisation.coord_postgis,4269) as coord_postgis
 	FROM
 		rdb_quicc.tree
 	INNER JOIN rdb_quicc.plot USING (plot_id, year_measured)
@@ -26,3 +26,14 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
 	AND plot.plot_size IS NOT NULL
 	ORDER BY plot_id
 );
+
+CREATE INDEX stm_mv_search_plots_idx
+	ON rdb_quicc.stm_plots_id
+	USING btree
+	(year_measured);
+
+
+CREATE INDEX stm_mv_coords_plots_gist_idx
+  ON rdb_quicc.stm_plots_id
+  USING gist
+  (coord_postgis);
