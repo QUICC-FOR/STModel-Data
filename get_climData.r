@@ -49,9 +49,7 @@ source('./con_quicc_db.r')
 require('reshape2')
 
 query_climData <- "
-SELECT plot_id, biovar,year_measured, avg(val) as mean_val FROM rdb_quicc.stm_plots_clim
-GROUP BY plot_id, biovar,year_measured
-"
+SELECT * FROM rdb_quicc.stm_plots_clim"
 
 ## Send the query to the database
 climData <- dbGetQuery(con, query_climData)
@@ -65,8 +63,8 @@ climData_reshape = climData
 
 ## Reshape
 climData_reshape$biovar <- as.factor(climData_reshape$biovar)
-climData_reshape[climData_reshape$mean_val == -9999.0,"mean_val"] <- NA
-climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="mean_val")
+climData_reshape[climData_reshape$mean_val == -9999.0,"avg_val"] <- NA
+climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="avg_val")
 
 ## NOTE: For bio grids the values of temperature must be divided by 10, and the values of Temperature Seasonality (C of V) must be divided by 100
 climData_reshape$mean_diurnal_range <- climData_reshape$mean_diurnal_range/10
