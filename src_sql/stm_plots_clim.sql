@@ -8,7 +8,7 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_clim AS (
      WHERE ST_Intersects(rast_climato,coord_postgis)
 );
 
-CREATE INDEX stm_mv_clim_rs_search
+CREATE INDEX stm_mv_plots_clim_search
   ON rdb_quicc.stm_plots_clim
   USING btree
   (plot_id, year_measured ,biovar);
