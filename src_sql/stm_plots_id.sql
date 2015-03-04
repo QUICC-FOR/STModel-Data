@@ -11,7 +11,7 @@
 
 	-- The second queries get the climate of all plots for 6 different climatic variables (interception with climatic rasters, 2010-1960)
 
-DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_id;
+DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_plots_id CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_id AS (
 	SELECT DISTINCT
 		plot.plot_id,
