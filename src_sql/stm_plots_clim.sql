@@ -11,4 +11,4 @@ CREATE MATERIALIZED VIEW rdb_quicc.stm_plots_clim AS (
 CREATE INDEX stm_mv_clim_rs_search
   ON rdb_quicc.stm_plots_clim
   USING btree
-  (year_measured ,biovar);
+  (plot_id, year_measured ,biovar);
