@@ -5,7 +5,7 @@ DROP MATERIALIZED VIEW IF EXISTS rdb_quicc.stm_rasters_climato CASCADE;
 CREATE MATERIALIZED VIEW rdb_quicc.stm_rasters_climato AS (
 SELECT biovar, year_measured, ST_Tile(ST_Union(rast,'MEAN'),10,10) AS rast_climato FROM (
  SELECT biovar, year_clim, year_measured, rast
-    FROM clim_rs.clim_allbiovars,
+    FROM clim_rs.past_clim_allbiovars,
     (SELECT ST_ConvexHull(ST_Collect(coord_postgis)) as convex, year_measured FROM rdb_quicc.stm_plots_id GROUP BY year_measured) as bbox
     WHERE ST_Intersects(rast,convex)
     AND year_clim <= year_measured AND year_clim > year_measured-15) AS all_rast_last_15yrs
