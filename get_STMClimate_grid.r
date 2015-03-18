@@ -23,7 +23,7 @@ query_STMClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
 	SELECT biovar, (ST_PixelAsCentroids(rasters, 1, false)).* FROM (
 	SELECT biovar, ST_Union(ST_Clip(rast,env_stm.env_plots),'MEAN') as rasters
 	FROM
-	(SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars
+	(SELECT rast, biovar,year_clim FROM clim_rs.past_clim_allbiovars
      WHERE (year_clim >= 1970 AND year_clim <= 2000)
 	AND biovar IN ('annual_mean_temp','tot_annual_pp')) AS rast_noram,
     (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plots_id.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plots_id) AS env_stm
@@ -42,24 +42,18 @@ STMClimate_grid = res_STMClimate_grid
 
 ## Reshape
 STMClimate_grid$biovar <- as.factor(STMClimate_grid$biovar)
+STMClimate_grid[STMClimate_grid$val==-9999,"val"] <- NA
 STMClimate_grid <- dcast(STMClimate_grid,x+y ~ biovar, value.var="val")
+STMClimate_grid[is.na(STMClimate_grid$tot_annual_pp),"annual_mean_temp"] <- NA
+STMClimate_grid[is.na(STMClimate_grid$annual_mean_temp),"tot_annual_pp"] <- NA
 
 ## Convert unit:
 # - Get decimal for annual_mean_temp (divided by 10)
 # - Convert mm to m for annual_pp (divided by 1000)
+STMClimate_grid$tot_annual_pp <- STMClimate_grid$tot_annual_pp/1000
+STMClimate_grid$annual_mean_temp <- STMClimate_grid$annual_mean_temp/10
 
-conv_func <-function(x,conv){
-
-	res = as.numeric(length(x))
-
-	for(i in 1:length(x)){
-		if(x[i] != -9999){res[i]=x[i]/conv} else {res[i]=x[i]}
-	}
-
-	return(res)
-}
-
-STMClimate_grid$tot_annual_pp <- conv_func(STMClimate_grid$tot_annual_pp,1000)
+STMClimate_grid[is.na(STMClimate_grid$annual_mean_temp),c(3,4)] <- -9999
 
 ## Add year columns and rename all dataset columns
 names(STMClimate_grid)[3:ncol(STMClimate_grid)] <- paste("env",seq(1,ncol(STMClimate_grid)-2,1),sep="")
