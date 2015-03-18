@@ -33,7 +33,7 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
     SELECT biovar, (ST_PixelAsCentroids(rasters)).* FROM (
     SELECT biovar, ST_Union(ST_Clip(ST_Resample(rast,ref_rast),env_stm.env_plots),'MEAN') as rasters
     FROM
-    (SELECT rast, biovar,year_clim FROM clim_rs.clim_allbiovars
+    (SELECT rast, biovar,year_clim FROM clim_rs.past_clim_allbiovars
      WHERE (year_clim >= 1970 AND year_clim <= 2000)
     AND biovar IN (
 
@@ -50,7 +50,7 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
 
     )) AS rast_noram,
     (SELECT ST_Transform(ST_ConvexHull(ST_Collect(stm_plots_id.coord_postgis)),4269) as env_plots FROM rdb_quicc.stm_plots_id) AS env_stm,
-    (SELECT rast as ref_rast FROM clim_rs.clim_allbiovars WHERE biovar = 'annual_mean_temp' LIMIT 1) as ref
+    (SELECT rast as ref_rast FROM clim_rs.past_clim_allbiovars WHERE biovar = 'annual_mean_temp' LIMIT 1) as ref
     WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
     GROUP BY biovar) AS union_query
 ) AS points_query;"
