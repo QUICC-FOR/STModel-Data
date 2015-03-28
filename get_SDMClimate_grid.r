@@ -14,8 +14,8 @@
 ## ---------------------------------------------
 
 # Database connection
-source('./con_quicc_db.r')
-#source('./con_quicc_db_local.r')
+#source('./con_quicc_db.r')
+source('./con_quicc_db_local.r')
 
 #Load librairies
 require('reshape2')
