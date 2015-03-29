@@ -44,7 +44,7 @@ CREATE TABLE temp_quicc.stm_lakes_shapes AS
     FROM rdb_quicc.stm_plots_id) as envelope) as surf
     WHERE st_area >= 0.005
     ) as us_can_geometry
-    WHERE ST_IsEmpty(geom) = False;
+    WHERE NOT ST_IsEmpty(geom);
 
 CREATE INDEX idx_lakes_shapes_gist
   ON temp_quicc.stm_lakes_shapes USING gist(geom);
