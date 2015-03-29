@@ -6,8 +6,8 @@
 ## ---------------------------------------------
 
 # Database connection
-#source('./con_quicc_db.r')
-source('./con_quicc_db_local.r')
+source('./con_quicc_db.r')
+#source('./con_quicc_db_local.r')
 source('./Rpostgis.r') #Extract spatial layer form the DB
 
 # Library
