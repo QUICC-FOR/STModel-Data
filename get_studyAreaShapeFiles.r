@@ -6,6 +6,7 @@
 ## ---------------------------------------------
 
 # Database connection
+
 source('./con_quicc_db.r')
 #source('./con_quicc_db_local.r')
 source('./Rpostgis.r') #Extract spatial layer form the DB
@@ -16,6 +17,8 @@ require(ggplot2)
 # Extract shapefiles from the database
 countries <- dbReadSpatial(con, schemaname="temp_quicc", tablename="stm_countries_shapes", geomcol="geom")
 lakes <- dbReadSpatial(con, schemaname="temp_quicc", tablename="stm_lakes_shapes", geomcol="geom")
+
+system('mkdir -p ./out_files/shapefiles/')
 
 # Write shapefiles
 writeOGR(lakes, "./out_files/shapefiles/", "lakes_stm_area", driver="ESRI Shapefile")

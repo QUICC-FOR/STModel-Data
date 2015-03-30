@@ -50,7 +50,7 @@ STMClimate_grid[is.na(STMClimate_grid$annual_mean_temp),"tot_annual_pp"] <- NA
 ## Convert unit:
 # - Get decimal for annual_mean_temp (divided by 10)
 # - Convert mm to m for annual_pp (divided by 1000)
-STMClimate_grid$tot_annual_pp <- STMClimate_grid$tot_annual_pp/1000
+#STMClimate_grid$tot_annual_pp <- STMClimate_grid$tot_annual_pp/1000
 STMClimate_grid$annual_mean_temp <- STMClimate_grid$annual_mean_temp/10
 
 ## Scale grid value
