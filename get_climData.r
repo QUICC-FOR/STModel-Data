@@ -64,8 +64,8 @@ climData_reshape = climData
 
 ## Reshape
 climData_reshape$biovar <- as.factor(climData_reshape$biovar)
-climData_reshape[climData_reshape$mean_val == -9999.0,"avg_val"] <- NA
-climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="avg_val")
+climData_reshape[climData_reshape$val == -9999.0,"val"] <- NA
+climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="val")
 
 ## NOTE: For bio grids the values of temperature must be divided by 10, and the values of Temperature Seasonality (C of V) must be divided by 100
 climData_reshape$mean_diurnal_range <- climData_reshape$mean_diurnal_range/10

@@ -34,7 +34,7 @@ CREATE TABLE temp_quicc.stm_lakes_shapes AS
     WHERE area >= 0.005
 
     UNION ALL
-
+    
     SELECT geom, region FROM(
     SELECT ST_Intersection(usa_water_areas_dcw.geom,envelope.env_plots) as geom,
     'usa' :: varchar(4) as region,
