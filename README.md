@@ -56,7 +56,12 @@ dbport <- 55432
 
 **Get only plot info data**: ```make plotInfoData```
 
-**Get only past climate grid input**: ```make pastClimate_grid```
+**Get only STM past-climate grid input (1970-2000)**: ```make STMClimate_grid``` Use to run STM on the past-climate
+
+**Get only SDM past-climate grid input (1970-2000)**: ```make SDMClimate_grid``` Used to project SDM
+
+**Retrieve shapefile of the study area (Lakes and boundaries)**:  ```make SHP_area ```
+
 
 ## Plots distribution
 
@@ -111,8 +116,6 @@ Column        | Description
 **longitude** | longitude of the plot (degree decimal)
 **latitude**  | latitude of the plot (degree decimal)
 **srid**      | Spatial Reference System Identifier. All plots have a srid code corresponding to the datum: WGS84 (see [here](http://spatialreference.org/ref/epsg/4326/)).
-**drainage**  | *coming soon*
-**slope**     | *coming soon* (in degree)
 
 ### treeData
 
