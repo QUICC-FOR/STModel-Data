@@ -201,6 +201,39 @@ Code           | Species
 183412-LAR-LAR | Tamarack
 195773-POP-TRE | Trembling aspen
 
-### Drainage
+### Soils codes
 
-*coming soon*
+| Code | Soil type    |
+|:----:|:------------:|
+| 0    | NODATA       |
+| 1    | Acrisols     |
+| 2    | Albeluvisols |
+| 3    | Alisols      |
+| 4    | Andosols     |
+| 5    | Anthrosols   |
+| 6    | Arenosols    |
+| 7    | Calcisols    |
+| 8    | Cambisols    |
+| 9    | Chernozems   |
+| 10   | Cryosols     |
+| 11   | Durisols     |
+| 12   | Ferralsols   |
+| 13   | Fluvisols    |
+| 14   | Gleysols     |
+| 15   | Gypsisols    |
+| 16   | Histosols    |
+| 17   | Kastanozems  |
+| 18   | Leptosols    |
+| 19   | Lixisols     |
+| 20   | Luvisols     |
+| 21   | Nitisols     |
+| 22   | Phaeozems    |
+| 23   | Planosols    |
+| 24   | Plinthosols  |
+| 25   | Podzols      |
+| 27   | Regosols     |
+| 28   | Solonchaks   |
+| 29   | Solonetz     |
+| 30   | Stagnosols   |
+| 31   | Umbrisols    |
+| 32   | Vertisols    |
