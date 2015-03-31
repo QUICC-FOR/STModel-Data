@@ -3,7 +3,6 @@ credentials.r
 
 ## R ouputs
 
-.RData
 *.Rout
 ggmapTemp.png
 .Rapp.history
