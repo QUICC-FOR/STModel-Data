@@ -37,6 +37,10 @@
   # mean_temp_for_period_3: Average temperature during growing season
   # temp_range_for_period_3: Highest maximum temperature minus lowest minimum temperature during growing
 
+## Additionnal data
+  # - Slope from DEM (10 km)
+  # - Soil type from SoilGrids (http://soilgrids.org/)
+
 # Source: http://journals.ametsoc.org/doi/abs/10.1175/2011BAMS3132.1
 
 ## Get climData from quicc-for database
@@ -48,12 +52,14 @@ source('./con_quicc_db.r')
 
 #Load librairies
 require('reshape2')
+require('dplyr')
 
-query_climData <- "
-SELECT * FROM rdb_quicc.stm_plots_clim"
+query_climData <- "SELECT * FROM rdb_quicc.stm_plots_clim;"
+query_soil <-"SELECT * FROM rdb_quicc.stm_plots_soil_slp;"
 
 ## Send the query to the database
 climData <- dbGetQuery(con, query_climData)
+soilData <- dbGetQuery(con,query_soil)
 ## Time: Approx. 12 minutes
 
 
@@ -67,6 +73,11 @@ climData_reshape$biovar <- as.factor(climData_reshape$biovar)
 climData_reshape[climData_reshape$val == -9999.0,"val"] <- NA
 climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value.var="val")
 
+##Add soil
+climData_reshape <- left_join(climData_reshape,soilData,by="plot_id")
+
+
+## Scale transformation from NRCAN
 ## NOTE: For bio grids the values of temperature must be divided by 10, and the values of Temperature Seasonality (C of V) must be divided by 100
 climData_reshape$mean_diurnal_range <- climData_reshape$mean_diurnal_range/10
 climData_reshape$max_temp_warmest_period <- climData_reshape$max_temp_warmest_period/10
