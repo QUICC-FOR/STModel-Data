@@ -161,7 +161,7 @@ Column                                      | Description
 
 **Further details [here](http://journals.ametsoc.org/doi/pdf/10.1175/2011BAMS3132.1)**
 
-### pastClimate_grid
+### STMClimate_grid
 
 Column   | Description
 ---      | ---
