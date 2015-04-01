@@ -2,15 +2,16 @@
 credentials.r
 
 ## R ouputs
-
-.RData
 *.Rout
 ggmapTemp.png
 .Rapp.history
 
+#Mac scrap
+.DS_Store
+
 ## Data
 out_files/*
-!out_files/shapefiles/
+!out_files/*.RData
 out_files/shapefiles/*
 !out_files/plots_map.png
 reshape/*.rdata
