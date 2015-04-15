@@ -25,6 +25,11 @@ writeOGR(lakes, "./out_files/shapefiles/", "lakes_stm_area", driver="ESRI Shapef
 writeOGR(countries, "./out_files/shapefiles/", "countries_stm_area", driver="ESRI Shapefile")
 
 #Convert to ggplot2 format
+ext_geo <- extent(c(-79.95454,-60.04625,43.04572,50.95411))
+
+#Crop and fortify
+lakes <- crop(lakes,ext_geo)
+countries <- crop(countries,ext_geo)
 df.lakes <- fortify(lakes)
 df.countries <- fortify(countries)
 
