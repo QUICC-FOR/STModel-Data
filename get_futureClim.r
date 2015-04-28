@@ -20,9 +20,9 @@ out_folder <- "./out_files/fut_clim/"
 
 for (x in 1:dim(GCM_df)[1]){
 
-    for (i in 1:length(windows)){
+    for (i in 2:length(windows)){
 
-    query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, ", windows[i] ," as min_yr,",windows[i+1]," as max_yr, val FROM (
+    query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, ", windows[i-1] ," as min_yr,",windows[i]," as max_yr, val FROM (
     SELECT var,yr,(ST_PixelAsCentroids(ST_Union(ST_Clip(raster,1,env_plots,true),'MEAN'),1,true)).*
     FROM clim_rs.fut_clim_biovars,
     (SELECT ST_Polygon(ST_GeomFromText('LINESTRING(-79.95454 43.04572,-79.95454 50.95411,-60.04625 50.95411,-60.04625 43.04572,-79.95454 43.04572)'), 4326) as env_plots) as envelope
@@ -30,10 +30,12 @@ for (x in 1:dim(GCM_df)[1]){
     GROUP BY var, yr
     ) as pixels;",sep="")
 
+    cat("Querying id: ",rownames(GCM_df)[x],"; processing window:", windows[i-1], "-", windows[i], "\n")
+
     fut_climData <- dbGetQuery(con, query_fut_climData)
     
-    write.table(fut_climData, file="out_files/climData.csv", sep=',', row.names=FALSE)
-    
+    write.table(fut_climData, file=paste(out_folder,"fut_climData_id_",rownames(GCM_df)[x],"_win_",windows[i-1],"-",windows[i],".csv",sep=""), sep=',', row.names=FALSE)
+
     }
 }
 
