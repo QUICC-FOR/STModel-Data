@@ -17,7 +17,6 @@ if(vpn == "Y" || vpn == "y") {
 	dbport <- 55432
 }
 
-
 # use colosse for GCMs
 colosse = Sys.getenv("COLOSSE")
 if(colosse == "Y" || colosse == "y") {
