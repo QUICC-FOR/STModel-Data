@@ -17,6 +17,15 @@ if(vpn == "Y" || vpn == "y") {
 	dbport <- 55432
 }
 
+
+# use colosse for GCMs
+colosse = Sys.getenv("COLOSSE")
+if(colosse == "Y" || colosse == "y") {
+    dbname <- "mffp"
+    dbhost <- "132.219.137.38"
+    dbport <- 5432
+}
+
 drv <- dbDriver("PostgreSQL")
 dbuser = Sys.getenv("QC_USERNAME")
 dbpass = Sys.getenv("QC_PASSWORD")

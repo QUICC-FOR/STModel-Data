@@ -6,14 +6,16 @@ R_STATE = 1
 
 R_CMD = Rscript
 export QC_VPN := $(shell bash -c 'read -p "Use VPN (Y/[N]): " vpn; vpn=$${vpn:-N}; echo $$vpn')
+export COLOSSE := $(shell bash -c 'read -p "On Colosse, Calcul-Quebec (Y/[N]): " colosse; colosse=$${colosse:-N}; echo $$colosse')
 export QC_USERNAME := $(shell bash -c 'read -p "Enter your database username: " pwd; echo $$pwd')
 export QC_PASSWORD := $(shell bash -c 'read -s -p "Enter your database password: " pwd; echo $$pwd')
 
 
-all: treeData climData plotInfoData STMClimate_grid SDMClimate_grid plotMap SHP_area reshape
+all: treeData past_climData plotInfoData STMClimate_grid SDMClimate_grid plotMap SHP_area reshape
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
-climData: out_files/climData.csv
+past_climData: out_files/climData.csv
+fut_climData: out_files/fut_clim/*
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
 SDMClimate_grid: out_files/SDMClimate_grid.csv
@@ -30,6 +32,10 @@ clean: cleanR
 # removes junk created by R CMD BATCH
 cleanR:
 	rm -f *.Rout .RData
+
+out_files/fut_clim/*: get_futureClim.r con_quicc_db.r
+	$(R_CMD) get_futureClim.r
+	@echo "Query success and GCMs grids transferred into out_files folder"
 
 out_files/speciesCode.csv: get_speciesCode.r con_quicc_db.r
 	$(R_CMD) get_speciesCode.r
