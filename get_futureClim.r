@@ -22,7 +22,7 @@ for (x in 1:dim(GCM_df)[1]){
 
     for (i in 1:length(windows)){
 
-    query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, ", windows[i-1] ," as min_yr,",windows[i]," as max_yr, val FROM (
+    query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, ", windows[i]-15 ," as min_yr,",windows[i]," as max_yr, val FROM (
     SELECT var,yr,(ST_PixelAsCentroids(ST_Union(ST_Clip(raster,1,env_plots,true),'MEAN'),1,false)).*
     FROM clim_rs.fut_clim_biovars,
     (SELECT ST_Polygon(ST_GeomFromText('LINESTRING(-79.95454 43.04572,-79.95454 50.95411,-60.04625 50.95411,-60.04625 43.04572,-79.95454 43.04572)'), 4326) as env_plots) as envelope
