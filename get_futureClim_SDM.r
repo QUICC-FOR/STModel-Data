@@ -15,7 +15,7 @@ require('reshape2')
 GCM_df <- read.csv("./list_GCMs.csv")
 GCM_df <- subset(GCM_df, scenario == 'rcp85')
 
-out_folder <- "./out_files/"
+out_folder <- "./out_files/fut_SDM/"
 
 for (x in 1:dim(GCM_df)[1]){
     query_fut_climSDM <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, var, val, clim_center, mod, run, scenario FROM (
