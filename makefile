@@ -20,7 +20,7 @@ fut_climSDM: out_files/fut_SDM/*
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
 SDMClimate_grid: out_files/SDMClimate_grid.csv
-SHP_area: out_files/shp_stm_area.robj
+SHP_area: out_files/shp_stm_area.rdata
 plotMap: out_files/plots_map.png
 reshape: out_files/transitions_r$(R_STATE).rdata
 twostate: out_files/transitions_twostate_18032-ABI-BAL.rdata out_files/transition_twostate_28731-ACE-SAC.rdata
@@ -65,7 +65,7 @@ out_files/SDMClimate_grid.csv: get_SDMClimate_grid.r con_quicc_db.r
 	$(R_CMD) get_SDMClimate_grid.r
 	@echo "Query success and SDMClimate_grid.csv transferred into out_files folder"
 
-out_files/shp_stm_area.robj: get_studyAreaShapeFiles.r con_quicc_db.r
+out_files/shp_stm_area.rdata: get_studyAreaShapeFiles.r con_quicc_db.r
 	mkdir -p out_files/shapefiles/
 	$(R_CMD) get_studyAreaShapeFiles.r
 	@echo "Shapefiles successfully writed in the out_files folder"
