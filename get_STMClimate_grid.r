@@ -26,7 +26,7 @@ query_STMClimate_grid  <- "SELECT x-1 as x, y-1 as y, val, biovar FROM (
     (SELECT rast, biovar,year_clim FROM clim_rs.past_clim_allbiovars
      WHERE (year_clim >= 1970 AND year_clim <= 2000)
     AND biovar IN ('annual_mean_temp','tot_annual_pp')) AS rast_noram,
-    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-96.998826 41.000000,-96.998826 52.900101,-57.308128 52.900101,-57.308128 41.000000,-96.998826 41.000000))',4326),4269) as env_plots) AS env_stm
+    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-79.95454 43.04572,-79.95454 50.95411,-60.04625 50.95411,-60.04625 43.04572,-79.95454 43.04572))',4326),4269) as env_plots) AS env_stm
     WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
     GROUP BY biovar) AS union_query
 ) AS points_query;"
@@ -47,12 +47,6 @@ STMClimate_grid <- dcast(STMClimate_grid,x+y ~ biovar, value.var="val")
 STMClimate_grid[is.na(STMClimate_grid$tot_annual_pp),"annual_mean_temp"] <- NA
 STMClimate_grid[is.na(STMClimate_grid$annual_mean_temp),"tot_annual_pp"] <- NA
 
-## Convert unit:
-# - Get decimal for annual_mean_temp (divided by 10)
-# - Convert mm to m for annual_pp (divided by 1000)
-#STMClimate_grid$tot_annual_pp <- STMClimate_grid$tot_annual_pp/1000
-STMClimate_grid$annual_mean_temp <- STMClimate_grid$annual_mean_temp/10
-
 ## Scale grid value
 load("./scale_info.Robj")
 STMClimate_grid$tot_annual_pp <- (STMClimate_grid$tot_annual_pp - vars.means['tot_annual_pp'])/ vars.sd['tot_annual_pp'] 
@@ -60,7 +54,6 @@ STMClimate_grid$annual_mean_temp <- (STMClimate_grid$annual_mean_temp - vars.mea
 
 
 STMClimate_grid[is.na(STMClimate_grid$annual_mean_temp),c(3,4)] <- -9999
-
 
 ## Add year columns and rename all dataset columns
 names(STMClimate_grid)[3:ncol(STMClimate_grid)] <- paste("env",seq(1,ncol(STMClimate_grid)-2,1),sep="")
