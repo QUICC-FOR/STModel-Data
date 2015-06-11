@@ -20,7 +20,6 @@ query_fut_climSDM <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, var, va
     GROUP BY var,clim_center, mod, run, scenario
     ) as pixels;",sep="")
 
-    
 fut_climSDM <- dbGetQuery(con, query_fut_climSDM)
     
 write.table(fut_climSDM, file=paste("out_files/fut_climSDM_2080-2095.csv",sep=""), sep=',', row.names=FALSE)
