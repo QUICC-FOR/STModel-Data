@@ -10,7 +10,7 @@ source('./con_quicc_db.r')
 #source('./con_quicc_db_local.r')
 
 #Load librairies
-require('reshape2')
+library('reshape2')
 
 GCM_df <- read.csv("./list_GCMs.csv")
 GCM_df <- subset(GCM_df, scenario == 'rcp85')
@@ -19,7 +19,7 @@ windows <- seq(2000,2095,5)
 out_folder <- "./out_files/fut_clim/"
 
 for (x in 1:dim(GCM_df)[1]){
-    system(paste("mkdir -p GCM_id_",rownames(GCM_df)[x],sep=""))
+    system(paste("mkdir -p ",out_folder,"GCM_id_",rownames(GCM_df)[x],sep=""))
     for (i in 1:length(windows)){
     query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, ", windows[i]-15 ," as min_yr,",windows[i]," as max_yr, val, clim_center, mod, run, scenario FROM (
     SELECT var,clim_center, mod, run, scenario, (ST_PixelAsCentroids(ST_Union(ST_Clip(ST_Transform(raster,4269),1,env_plots,true),'MEAN'),1,false)).*
