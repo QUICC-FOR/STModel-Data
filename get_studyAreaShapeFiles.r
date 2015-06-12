@@ -7,8 +7,8 @@
 
 # Database connection
 
-source('./con_quicc_db.r')
-#source('./con_quicc_db_local.r')
+#source('./con_quicc_db.r')
+source('./con_quicc_db_local.r')
 source('./Rpostgis.r') #Extract spatial layer form the DB
 
 # Library
@@ -35,12 +35,12 @@ ext_geo <- extent(c(-79.95454,-60.04625,43.04572,50.95411 ))
 #ext_geo <- extent(c(-96.98904, -57.30813,  35.25441,  52.90010))
 
 #Set CRS
-newproj <- CRS("+init=epsg:4269 +proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs +towgs84=0,0,0") 
+#newproj <- CRS("+init=epsg:4269 +proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs +towgs84=0,0,0") 
 
 #Crop, simplify and fortify
-lakes <- spTransform(crop(lakes,ext_geo),newproj)
-great_lakes <- spTransform(crop(great_lakes,ext_geo),newproj)
-countries <- spTransform(gSimplify(crop(countries,ext_geo),0.005),newproj)
+lakes <- crop(lakes,ext_geo)
+great_lakes <- crop(great_lakes,ext_geo)
+countries <- gSimplify(crop(countries,ext_geo),0.005)
 df.lakes <- fortify(lakes)
 df.countries <- fortify(countries)
 df.great_lakes <- fortify(great_lakes)
