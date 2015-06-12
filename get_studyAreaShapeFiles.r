@@ -34,11 +34,13 @@ writeOGR(great_lakes, "./out_files/shapefiles/", "great_lakes_stm_area", driver=
 ext_geo <- extent(c(-79.87535,-60.12543,43.12493,50.8749 ))
 #ext_geo <- extent(c(-96.98904, -57.30813,  35.25441,  52.90010))
 
+#Set CRS
+newproj <- CRS("+init=epsg:4269 +proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs +towgs84=0,0,0") 
 
 #Crop, simplify and fortify
-lakes <- crop(lakes,ext_geo)
-great_lakes <- crop(great_lakes,ext_geo)
-countries <- gSimplify(crop(countries,ext_geo),0.005)
+lakes <- spTransform(crop(lakes,ext_geo),newproj)
+great_lakes <- spTransform(crop(great_lakes,ext_geo),newproj)
+countries <- spTransform(gSimplify(crop(countries,ext_geo),0.005),newproj)
 df.lakes <- fortify(lakes)
 df.countries <- fortify(countries)
 df.great_lakes <- fortify(great_lakes)
