@@ -31,7 +31,7 @@ writeOGR(great_lakes, "./out_files/shapefiles/", "great_lakes_stm_area", driver=
 
 
 #Convert to ggplot2 format
-ext_geo <- extent(c(-79.87535,-60.12543,43.12493,50.8749 ))
+ext_geo <- extent(c(-79.95454,-60.04625,43.04572,50.95411 ))
 #ext_geo <- extent(c(-96.98904, -57.30813,  35.25441,  52.90010))
 
 #Set CRS
