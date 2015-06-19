@@ -10,8 +10,9 @@ ggmapTemp.png
 .DS_Store
 
 ## Data
-out_files/*
-!out_files/*.RData
+out_files/*.rdata
+out_files/*.csv
+!out_files/shp_stm_area.rdata
 out_files/shapefiles/*
 !out_files/plots_map.png
 reshape/*.rdata
