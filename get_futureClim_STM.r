@@ -16,7 +16,7 @@ GCM_df <- read.csv("./list_GCMs.csv")
 GCM_df <- subset(GCM_df, scenario == 'rcp85')
 
 windows <- seq(2000,2095,5)  
-out_folder <- "./out_files/fut_clim/"
+out_folder <- "./out_files/fut_clim_STM/"
 
 for (x in 1:dim(GCM_df)[1]){
     system(paste("mkdir -p ",out_folder,"GCM_id_",rownames(GCM_df)[x],sep=""))
