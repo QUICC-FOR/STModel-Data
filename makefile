@@ -15,11 +15,13 @@ all: treeData past_climData plotInfoData STMClimate_grid SDMClimate_grid plotMap
 speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 past_climData: out_files/climData.csv
-fut_climData: out_files/fut_clim/*
-fut_climSDM: out_files/fut_SDM/*
+fut_climSTM: out_files/fut_clim_STM
+fut_climSDM: out_files/fut_clim_SDM
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
 SDMClimate_grid: out_files/SDMClimate_grid.csv
+soil_grid: out_files/soil_grid.csv
+slope_grid: out_files/slope_grid.csv
 SHP_area: out_files/shp_stm_area.rdata
 plotMap: out_files/plots_map.png
 reshape: out_files/transitions_r$(R_STATE).rdata
@@ -33,13 +35,21 @@ clean: cleanR
 cleanR:
 	rm -f *.Rout .RData
 
-out_files/fut_clim/*: get_futureClim.r con_quicc_db.r
-	$(R_CMD) get_futureClim.r
+out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
+	$(R_CMD) get_futureClim_STM.r
 	@echo "Query success and GCMs grids transferred into out_files folder"
 
-out_files/fut_SDM/*: get_futureClim_SDM.r con_quicc_db.r
+out_files/fut_clim_SDM: get_futureClim_SDM.r con_quicc_db.r
 	$(R_CMD) get_futureClim_SDM.r
 	@echo "Query success and GCMs grids for SDM projections transferred into out_files folder"
+
+out_files/soil_grid.csv:  get_soilGrid.r con_quicc_db.r
+	$(R_CMD) get_soilGrid.r
+	@echo "Query success and soil grid transferred into out_files folder"
+
+out_files/slope_grid.csv:  get_slopeGrid.r con_quicc_db.r
+	$(R_CMD) get_slopeGrid.r
+	@echo "Query success and slope grid transferred into out_files folder"
 
 out_files/speciesCode.csv: get_speciesCode.r con_quicc_db.r
 	$(R_CMD) get_speciesCode.r

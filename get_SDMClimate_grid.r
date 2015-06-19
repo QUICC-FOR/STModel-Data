@@ -28,7 +28,7 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
     (SELECT rast, biovar,year_clim FROM clim_rs.past_clim_allbiovars
      WHERE year_clim >= 1970 AND year_clim <= 2000) AS rast_noram,
     (SELECT ST_Transform(ST_GeomFromText('POLYGON((-79.95454 43.04572,-79.95454 50.95411,-60.04625 50.95411,-60.04625 43.04572,-79.95454 43.04572))',4326),4269) as env_plots) AS env_stm,
-    (SELECT rast as ref_rast FROM clim_rs.past_clim_allbiovars WHERE biovar = 'annual_mean_temp' LIMIT 1) as ref
+    (SELECT ST_Union(rast) as ref_rast FROM clim_rs.past_clim_allbiovars WHERE biovar = 'annual_mean_temp' AND year_clim=2010) as ref
     WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
     GROUP BY biovar) AS union_query
 ) AS points_query;"
