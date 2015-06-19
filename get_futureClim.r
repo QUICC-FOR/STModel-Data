@@ -37,6 +37,3 @@ for (x in 1:dim(GCM_df)[1]){
 
     }
 }
-
-
-
