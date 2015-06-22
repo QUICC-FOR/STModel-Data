@@ -77,7 +77,7 @@ climData_reshape <- dcast(climData_reshape,plot_id+year_measured ~ biovar, value
 climData_reshape <- left_join(climData_reshape,soilData,by="plot_id")
 climData_reshape[which(climData_reshape$ph_2cm==255), "ph_2cm"] <- NA 
 climData_reshape[which(climData_reshape$ph_10cm==255), "ph_10cm"] <- NA 
-climData_reshape[which(climData_reshape$ph_10cm==255), "soil"] <- NA 
+climData_reshape[which(climData_reshape$soil==255), "soil"] <- NA 
 climData_reshape[which(climData_reshape$slp==-9999), "slp"] <- NA 
 
 ## Scale transformation from NRCAN
