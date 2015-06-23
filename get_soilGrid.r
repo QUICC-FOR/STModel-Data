@@ -2,8 +2,8 @@
 # Date: June 19th, 2015
 
 # Database connection
-source('./con_quicc_db.r')
-#source('./con_quicc_db_local.r')
+#source('./con_quicc_db.r')
+source('./con_quicc_db_local.r')
 
 #Load librairies
 require('reshape2')
@@ -15,6 +15,10 @@ query_soil_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, va
 ## Send the query to the database
 res_soil_grid <- dbGetQuery(con, query_soil_grid)
 ## Time: Approx. 5 minutes
+
+##Manage NA 
+res_soil_grid[which(res_soil_gridd$val==255)|which(res_soil_grid$val==0),"val"] <- NA
+
 
 # Writing grid dataset
 ## ---------------------------------------------
