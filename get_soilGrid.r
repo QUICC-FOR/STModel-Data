@@ -17,7 +17,7 @@ res_soil_grid <- dbGetQuery(con, query_soil_grid)
 ## Time: Approx. 5 minutes
 
 ##Manage NA 
-res_soil_grid[which(res_soil_gridd$val==255)|which(res_soil_grid$val==0),"val"] <- NA
+res_soil_grid[which(res_soil_grid$val==255)|which(res_soil_grid$val==0),"val"] <- NA
 
 
 # Writing grid dataset

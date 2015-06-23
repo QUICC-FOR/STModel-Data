@@ -19,7 +19,6 @@ res_slope_grid <- dbGetQuery(con, query_slope_grid)
 #Manage NA
 res_slope_grid[which(res_slope_grid$val==-9999),"val"] <- NA
 
-
 # Writing grid dataset
 ## ---------------------------------------------
 
