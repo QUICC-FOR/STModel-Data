@@ -7,7 +7,6 @@ require(argparse)
 # handle command line arguments
 parser = ArgumentParser()
 parser$add_argument("-i", "--infile", default="reshape/tmpStateData_twoState.rdata", help="input file name")
-parser$add_argument("-o", "--outfile", default="default", help="output file name")
 parser$add_argument("-s", "--species", default="28731-ACE-SAC", help="desired species code")
 trArgList = parser$parse_args()
 load(trArgList$infile)
@@ -65,9 +64,20 @@ for(i in 2:ncol(transSamples.wide[[trArgList$species]])) {
 cat(paste("Presence-absence table for", trArgList$species))
 print(table(transitionData$state1, transitionData$state2))
 
-outfile = trArgList$outfile
-if(outfile == "default") {
-	outfile = paste("out_files/transition_twostate_", trArgList$species, ".rdata", sep="")
-}
-save(stateData, transitionData, file=outfile)
-cat(paste("State and transition data written to", outfile, "\n"))
+trDatFile = file.path("out_files", paste(trArgList$species, "transitions.rds", sep="_"))
+trClimFile = file.path("out_files", "transitionClimate_raw.rds")
+stDatFile = file.path("out_files", paste(trArgList$species, "presence.rds", sep="_"))
+stClimFile = file.path("out_files", "plotClimate_raw.rds")
+
+trDat = transitionData[,c('plot', 'year1', 'year2', 'state1', 'state2')]
+trClim = transitionData[,-which(colnames(transitionData) %in% c('state1', 'state2'))]
+stDat = stateData[,c('plot_id', 'year_measured', trArgList$species)]
+stClim = stateData[,-which(colnames(stateData) %in% c(trArgList$species, 'lat', 'lon'))]
+
+saveRDS(trDat, trDatFile)
+saveRDS(trClim, trClimFile)
+saveRDS(stDat, stDatFile)
+saveRDS(stClim, stClimFile)
+
+
+cat(paste("State and transition data written successfully \n"))
