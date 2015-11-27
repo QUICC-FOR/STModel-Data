@@ -16,6 +16,9 @@ out_files/*.csv
 out_files/shapefiles/*
 !out_files/plots_map.png
 reshape/*.rdata
+*Occurence*.csv
+*.rds
+*.RData
 
 # python modules
 *.pyc
