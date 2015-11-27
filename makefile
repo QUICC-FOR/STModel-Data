@@ -40,7 +40,7 @@ out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
 	$(R_CMD) get_futureClim_STM.r
 	@echo "Query success and GCMs grids transferred into out_files folder"
 
-out_files/fut_Initclim_STM/": get_InitFutClim_STM.r con_quicc_db.r
+out_files/fut_Initclim_STM: get_InitFutClim_STM.r con_quicc_db.r
 	$(R_CMD) get_InitFutClim_STM.r
 	@echo "Query success and initial climatic landscape grids transferred into out_files folder"
 
