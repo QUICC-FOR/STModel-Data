@@ -16,6 +16,7 @@ speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 past_climData: out_files/climData.csv
 fut_climSTM: out_files/fut_clim_STM
+fut_InitclimSTM: out_files/fut_Initclim_STM
 fut_climSDM: out_files/fut_clim_SDM
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
@@ -38,6 +39,10 @@ cleanR:
 out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
 	$(R_CMD) get_futureClim_STM.r
 	@echo "Query success and GCMs grids transferred into out_files folder"
+
+out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
+	$(R_CMD) get_InitFutClim_STM.r
+	@echo "Query success and initial climatic landscape grids transferred into out_files folder"
 
 out_files/fut_clim_SDM: get_futureClim_SDM.r con_quicc_db.r
 	$(R_CMD) get_futureClim_SDM.r
