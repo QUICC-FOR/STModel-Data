@@ -23,8 +23,7 @@ for (x in 1:dim(GCM_df)[1]){
     query_fut_climData <- paste("SELECT ST_X(geom) as lon, ST_Y(geom) as lat, x , y, var, val, clim_center, mod, run, scenario FROM (
     SELECT var,clim_center, mod, run, scenario, (ST_PixelAsCentroids(ST_Union(ST_Clip(ST_Transform(raster,4269),1,env_plots,true),'MEAN'),1,false)).*
     FROM clim_rs.fut_clim_biovars,
-    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-97.0093390804598 25.0416666666667,-97.0093390804598 52.000000000000,-52.0416666666667 52.000000000000,-52.041666666
-6667 25.0416666666667,-97.0093390804598 25.0416666666667))',4326),4269) as env_plots) as envelope
+    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-97.0093390804598 25.0416666666667,-97.0093390804598 52.000000000000,-52.0416666666667 52.000000000000,-52.0416666666667 25.0416666666667,-97.0093390804598 25.0416666666667))',4326)::geometry,4269) as env_plots) as envelope
     WHERE (var='bio1' OR var='bio12') AND (yr>=2080 AND yr<=2095) AND clim_center='",GCM_df[x,1],"' AND mod='",GCM_df[x,2],"' AND run='",GCM_df[x,3],"' AND scenario='",GCM_df[x,4],"' AND ST_Intersects(ST_Transform(raster,4269),env_plots)
     GROUP BY var,clim_center, mod, run, scenario
     ) as pixels;",sep="")
