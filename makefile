@@ -21,6 +21,7 @@ fut_climSDM: out_files/fut_clim_SDM
 plotInfoData: out_files/plotInfoData.csv
 STMClimate_grid: out_files/STMClimate_grid.csv
 SDMClimate_grid: out_files/SDMClimate_grid.csv
+futureClimGrid:	out_files/futureClimGrid
 soil_grid: out_files/soil_grid.csv
 slope_grid: out_files/slope_grid.csv
 SHP_area: out_files/shp_stm_area.rdata
@@ -30,11 +31,15 @@ twostate: out_files/transitions_twostate_18032-ABI-BAL.rdata out_files/transitio
 
 # remove all data files and R junk
 clean: cleanR
-	rm -f out_files/*.csv
+	rm -f out_files/*
 
 # removes junk created by R CMD BATCH
 cleanR:
 	rm -f *.Rout .RData
+
+out_files/futureClimGrid: get_futureClimGrid.r con_quicc_db.r
+	$(R_CMD) get_futureClim_STM.r
+	@echo "Query success and GCMs grids transferred into out_files/futureClimGrid folder"
 
 out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
 	$(R_CMD) get_futureClim_STM.r
