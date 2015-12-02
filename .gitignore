@@ -12,6 +12,8 @@ ggmapTemp.png
 ## Data
 out_files/*.rdata
 out_files/*.csv
+out_files/fut_Initclim_STM/
+out_files/fut_clim/
 !out_files/shp_stm_area.rdata
 out_files/shapefiles/*
 !out_files/plots_map.png
