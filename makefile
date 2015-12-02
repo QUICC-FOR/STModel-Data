@@ -38,7 +38,7 @@ cleanR:
 	rm -f *.Rout .RData
 
 out_files/futureClimGrid: get_futureClimGrid.r con_quicc_db.r
-	$(R_CMD) get_futureClim_STM.r
+	$(R_CMD) get_futureClimGrid.r
 	@echo "Query success and GCMs grids transferred into out_files/futureClimGrid folder"
 
 out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
