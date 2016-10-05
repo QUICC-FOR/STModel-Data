@@ -1,6 +1,8 @@
 # Makefile to retrieve & reshape data from the QUICC-FOR database
 # Jan 20, 2015
 
+### TODO: Improve this terrible makefile
+
 # set the threshold basal area value for the R state
 R_STATE = 5
 
@@ -14,7 +16,7 @@ speciesCode: out_files/speciesCode.csv
 treeData: out_files/treeData.csv
 past_climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
-STMClimate_grid: out_files/STMClimate_grid.csv
+climato_1970-2000: out_files/climato_1970-2000_biovars.rds
 SDMClimate_grid: out_files/SDMClimate_grid.csv
 futureClimGrid:	out_files/futureClimGrid
 soil_grid: out_files/soil_grid.csv
@@ -32,21 +34,6 @@ clean: cleanR
 cleanR:
 	rm -f *.Rout .RData
 
-out_files/futureClimGrid: get_futureClimGrid.r con_quicc_db.r
-	$(R_CMD) get_futureClimGrid.r
-	@echo "Query success and GCMs grids transferred into out_files/futureClimGrid folder"
-
-out_files/fut_clim_STM: get_futureClim_STM.r con_quicc_db.r
-	$(R_CMD) get_futureClim_STM.r
-	@echo "Query success and GCMs grids transferred into out_files folder"
-
-out_files/fut_Initclim_STM: get_InitFutClim_STM.r con_quicc_db.r
-	$(R_CMD) get_InitFutClim_STM.r
-	@echo "Query success and initial climatic landscape grids transferred into out_files folder"
-
-out_files/fut_clim_SDM: get_futureClim_SDM.r con_quicc_db.r
-	$(R_CMD) get_futureClim_SDM.r
-	@echo "Query success and GCMs grids for SDM projections transferred into out_files folder"
 
 out_files/soil_grid.csv:  get_soilGrid.r con_quicc_db.r
 	$(R_CMD) get_soilGrid.r
@@ -72,9 +59,9 @@ out_files/plotInfoData.csv: get_plotInfoData.r con_quicc_db.r
 	$(R_CMD) get_plotInfoData.r
 	@echo "Query success and plotInfo.csv transferred into out_files folder"
 
-out_files/STMClimate_grid.csv: get_STMClimate_grid.r con_quicc_db.r
-	$(R_CMD) get_STMClimate_grid.r
-	@echo "Query success and STMClimate_grid.csv transferred into out_files folder"
+out_files/climato_1970-2000_biovars.rds: get_climato_1970-2000.r con_quicc_db.r
+	$(R_CMD) get_climato_1970-2000.r
+	@echo "Query success and climato_1970-2000_biovars.rds transferred into out_files folder"
 
 out_files/SDMClimate_grid.csv: get_SDMClimate_grid.r con_quicc_db.r
 	$(R_CMD) get_SDMClimate_grid.r
