@@ -7,9 +7,6 @@
 R_STATE = 5
 
 R_CMD = Rscript
-export USERNAME := $(shell bash -c 'read -p "Enter your database username: " pwd; echo $$pwd')
-export PASSWORD := $(shell bash -c 'read -s -p "Enter your database password: " pwd; echo $$pwd')
-
 
 all: treeData past_climData plotInfoData STMClimate_grid SDMClimate_grid plotMap SHP_area reshape
 speciesCode: out_files/speciesCode.csv
