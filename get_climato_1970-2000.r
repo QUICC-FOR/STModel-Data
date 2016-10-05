@@ -59,4 +59,4 @@ climato$temp_annual_range <- climato$temp_annual_range/10
 climato$temp_seasonality <- climato$temp_seasonality/100
 
 ## Write
-saveRDS(climato, file="out_files/climato_1970-2000_biovars.rds", sep=',', row.names=FALSE)
+saveRDS(climato, file="out_files/climato_1970-2000_biovars.rds")
