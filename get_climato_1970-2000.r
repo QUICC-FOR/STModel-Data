@@ -22,7 +22,7 @@ source('./con_quicc_db.r')
 require('reshape2')
 
 # Query
-query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, biovar FROM (
+query_climato  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, biovar FROM (
     SELECT biovar, (ST_PixelAsCentroids(rasters)).* FROM (
     SELECT biovar, ST_Union(ST_Clip(ST_Resample(rast,ref_rast),env_stm.env_plots),'MEAN') as rasters
     FROM
@@ -35,28 +35,28 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
 ) AS points_query;"
 
 ## Send the query to the database
-res_SDMClimate_grid <- dbGetQuery(con, query_SDMClimate_grid)
+res_climato <- dbGetQuery(con, query_climato)
 ## Time: Approx. 5-15 minutes
 
 # Reshaping and writing grid dataset
 ## ---------------------------------------------
 
-SDMClimate_grid = res_SDMClimate_grid
+climato = res_climato
 
 ## Reshape
-SDMClimate_grid$biovar <- as.factor(SDMClimate_grid$biovar)
-SDMClimate_grid <- dcast(SDMClimate_grid,lon+lat ~ biovar, value.var="val")
+climato$biovar <- as.factor(climato$biovar)
+climato <- dcast(climato,lon+lat ~ biovar, value.var="val")
 
 #Conversion unit
-SDMClimate_grid$mean_diurnal_range <- SDMClimate_grid$mean_diurnal_range/10
-SDMClimate_grid$mean_temp_wettest_quarter <- SDMClimate_grid$mean_temp_wettest_quarter/10
-SDMClimate_grid$mean_temp_driest_quarter <- SDMClimate_grid$mean_temp_driest_quarter/10
-SDMClimate_grid$max_temp_warmest_period <- SDMClimate_grid$max_temp_warmest_period/10
-SDMClimate_grid$mean_temp_coldest_quarter <- SDMClimate_grid$mean_temp_coldest_quarter/10
-SDMClimate_grid$mean_temp_warmest_quarter <- SDMClimate_grid$mean_temp_warmest_quarter/10
-SDMClimate_grid$min_temp_coldest_period <- SDMClimate_grid$min_temp_coldest_period/10
-SDMClimate_grid$temp_annual_range <- SDMClimate_grid$temp_annual_range/10
-SDMClimate_grid$temp_seasonality <- SDMClimate_grid$temp_seasonality/100
+climato$mean_diurnal_range <- climato$mean_diurnal_range/10
+climato$mean_temp_wettest_quarter <- climato$mean_temp_wettest_quarter/10
+climato$mean_temp_driest_quarter <- climato$mean_temp_driest_quarter/10
+climato$max_temp_warmest_period <- climato$max_temp_warmest_period/10
+climato$mean_temp_coldest_quarter <- climato$mean_temp_coldest_quarter/10
+climato$mean_temp_warmest_quarter <- climato$mean_temp_warmest_quarter/10
+climato$min_temp_coldest_period <- climato$min_temp_coldest_period/10
+climato$temp_annual_range <- climato$temp_annual_range/10
+climato$temp_seasonality <- climato$temp_seasonality/100
 
 ## Write
-saveRDS(SDMClimate_grid, file="out_files/climato_1970-2000_biovars.rds", sep=',', row.names=FALSE)
+saveRDS(climato, file="out_files/climato_1970-2000_biovars.rds", sep=',', row.names=FALSE)
