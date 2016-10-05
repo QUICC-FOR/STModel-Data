@@ -1,10 +1,11 @@
 # Prepare SDM climate grid
 # Date: February 9th, 2015
+# Edited: October, 5th 2016
 
-# This script prepare grid of the SDM climate for the study area.
+# This script prepare a climatology grid period (1970-2000) for the study area.
 ## ---------------------------------------------
-# First step: The North america SDM climate grid is clipped with a convexHull of the location plots.
-# Second step: The average of the climatic variables are compute on the clipped raster and the range of time expected
+# First step: The Eastern North america climate grid is clipped.
+# Second step: The average of each climatic variables are computed on 1970-2000 period.
 
 
 ## Variable selected for the SDM (see 0-SDM_explo_vars in STModel-Calibration model)
@@ -27,7 +28,7 @@ query_SDMClimate_grid  <- "SELECT ST_X(geom) as lon, ST_Y(geom) as lat, val, bio
     FROM
     (SELECT rast, biovar,year_clim FROM clim_rs.past_clim_allbiovars
      WHERE year_clim >= 1970 AND year_clim <= 2000) AS rast_noram,
-    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-79.95454 43.04572,-79.95454 50.95411,-60.04625 50.95411,-60.04625 43.04572,-79.95454 43.04572))',4326),4269) as env_plots) AS env_stm,
+    (SELECT ST_Transform(ST_GeomFromText('POLYGON((-95.0 24.0,-95.0 62.5,-60.04625 62.5,-60.04625 24.0,-95.0 24.0))',4326),4269) as env_plots) AS env_stm,
     (SELECT ST_Union(rast) as ref_rast FROM clim_rs.past_clim_allbiovars WHERE biovar = 'annual_mean_temp' AND year_clim=2010) as ref
     WHERE ST_Intersects(rast_noram.rast,env_stm.env_plots)
     GROUP BY biovar) AS union_query
@@ -58,9 +59,4 @@ SDMClimate_grid$temp_annual_range <- SDMClimate_grid$temp_annual_range/10
 SDMClimate_grid$temp_seasonality <- SDMClimate_grid$temp_seasonality/100
 
 ## Write
-write.table(SDMClimate_grid, file="out_files/SDMClimate_grid.csv", sep=',', row.names=FALSE)
-
-
-
-
-
+saveRDS(SDMClimate_grid, file="out_files/climato_1970-2000_biovars.rds", sep=',', row.names=FALSE)
