@@ -15,7 +15,6 @@ past_climData: out_files/climData.csv
 plotInfoData: out_files/plotInfoData.csv
 climato_1970-2000: out_files/climato_1970-2000_biovars.rds
 SDMClimate_grid: out_files/SDMClimate_grid.csv
-futureClimGrid:	out_files/futureClimGrid
 soil_grid: out_files/soil_grid.csv
 slope_grid: out_files/slope_grid.csv
 SHP_area: out_files/shp_stm_area.rdata
