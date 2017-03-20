@@ -12,11 +12,17 @@ parser$add_argument("-t", "--tree", default="out_files/treeData.csv", help="tree
 parser$add_argument("-p", "--plot", default="out_files/plotInfoData.csv", help="plot data file location")
 argList = parser$parse_args()
 
-tSpecies = c('19481-BET-ALL','19408-QUE-RUB','28728-ACE-RUB','28731-ACE-SAC',
+tSpecies = c('19408-QUE-RUB','28728-ACE-RUB','28731-ACE-SAC',
   '32931-FRA-AME','32945-FRA-NIG','19462-FAG-GRA','19511-OST-VIR','21536-TIL-AME',
-  '24764-PRU-SER')
+  '24764-PRU-SER', "183397-TSU-CAN")
 bSpecies = c('183302-PIC-MAR','183295-PIC-GLA','18034-PIC-RUB','183412-LAR-LAR',
-  '183319-PIN-BAN','18032-ABI-BAL')
+  '183319-PIN-BAN','18032-ABI-BAL', "505490-THU-OCC")
+
+# formerly T:
+# '19481-BET-ALL'
+
+# formerly B:
+# "183397-TSU-CAN"
 
 # read the data
 treeDat = read.csv(argList$tree)

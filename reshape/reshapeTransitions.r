@@ -7,7 +7,7 @@ require(argparse)
 # handle command line arguments
 parser = ArgumentParser()
 parser$add_argument("-i", "--infile", default="reshape/tmpStateData_r1.rdata", help="input file name")
-parser$add_argument("-o", "--outfile", default="out_data/transitions.rdata", help="output file name")
+parser$add_argument("-o", "--outfile", default="out_files/transitions.rdata", help="output file name")
 trArgList = parser$parse_args()
 load(trArgList$infile)
 

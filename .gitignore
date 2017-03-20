@@ -1,5 +1,6 @@
 ## DB credentials
 credentials.r
+*.Rhistory
 
 ## R ouputs
 *.Rout
